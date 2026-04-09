@@ -3,256 +3,950 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>🎁 Wishlist — Chọn quà giúp mình</title>
-
+    <title>✨ Wishlist — Chọn quà cho mình</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --cream: #faf8f5;
+        --cream2: #f4f0ea;
+        --beige: #e8e1d6;
+        --sand: #c9b99a;
+        --clay: #9d7f5e;
+        --espresso: #3a2e24;
+        --charcoal: #1c1c1c;
+        --muted: #8a8178;
+        --rose: #c4856a;
+        --green: #6a9e7a;
+        --stroke: rgba(58, 46, 36, 0.12);
+        --stroke2: rgba(58, 46, 36, 0.22);
+        --radius: 4px;
+        --serif: 'Cormorant Garamond', Georgia, serif;
+        --sans: 'DM Sans', system-ui, sans-serif;
+        --shadow: 0 2px 20px rgba(58,46,36,0.08);
+        --shadow2: 0 8px 40px rgba(58,46,36,0.14);
+      }
 
-    <link rel="stylesheet" href="./style.css" />
-    <meta name="color-scheme" content="dark light" />
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
+      body {
+        font-family: var(--sans);
+        background: var(--cream);
+        color: var(--charcoal);
+        min-height: 100vh;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* ── TOPBAR ── */
+      .topbar {
+        position: sticky; top: 0; z-index: 100;
+        background: var(--cream);
+        border-bottom: 1px solid var(--stroke);
+        padding: 0 clamp(24px,5vw,80px);
+      }
+      .topbar__inner {
+        max-width: 1180px; margin: 0 auto;
+        display: flex; align-items: center; justify-content: space-between;
+        height: 64px;
+      }
+      .brand {
+        display: flex; flex-direction: column; gap: 1px;
+        text-decoration: none; color: inherit;
+      }
+      .brand__name {
+        font-family: var(--serif);
+        font-size: 22px; font-weight: 500; letter-spacing: 2px;
+        text-transform: uppercase; color: var(--espresso);
+      }
+      .brand__tag {
+        font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+        color: var(--muted); font-weight: 400;
+      }
+      .nav { display: flex; align-items: center; gap: 6px; }
+      .nav-btn {
+        border: 1px solid var(--stroke);
+        background: transparent;
+        color: var(--espresso);
+        font-family: var(--sans);
+        font-size: 12px; font-weight: 500;
+        letter-spacing: 0.8px; text-transform: uppercase;
+        padding: 8px 16px; cursor: pointer;
+        border-radius: 2px;
+        display: flex; align-items: center; gap: 6px;
+        transition: all .2s ease;
+      }
+      .nav-btn:hover { background: var(--cream2); border-color: var(--stroke2); }
+      .nav-btn--fill {
+        background: var(--espresso); color: var(--cream);
+        border-color: var(--espresso);
+      }
+      .nav-btn--fill:hover { background: var(--clay); border-color: var(--clay); }
+
+      /* ── HERO MASTHEAD ── */
+      .masthead {
+        border-bottom: 1px solid var(--stroke);
+        padding: clamp(40px,7vw,80px) clamp(24px,5vw,80px) 0;
+      }
+      .masthead__inner { max-width: 1180px; margin: 0 auto; }
+      .masthead__kicker {
+        font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+        color: var(--clay); font-weight: 500; margin-bottom: 14px;
+        display: flex; align-items: center; gap: 10px;
+      }
+      .masthead__kicker::before {
+        content: ''; display: block;
+        width: 28px; height: 1px; background: var(--clay);
+      }
+      .masthead__title {
+        font-family: var(--serif);
+        font-size: clamp(48px,7vw,96px);
+        font-weight: 300; line-height: 0.92;
+        letter-spacing: -1px; color: var(--espresso);
+        margin-bottom: 24px;
+      }
+      .masthead__title em { font-style: italic; color: var(--clay); }
+      .masthead__desc {
+        font-size: 15px; color: var(--muted);
+        max-width: 46ch; line-height: 1.65; margin-bottom: 36px;
+      }
+
+      .stats-row {
+        display: flex; gap: 0;
+        border-top: 1px solid var(--stroke);
+        border-bottom: none;
+      }
+      .stat-cell {
+        flex: 1; padding: 20px 0;
+        border-right: 1px solid var(--stroke);
+        display: flex; flex-direction: column; gap: 4px;
+      }
+      .stat-cell:last-child { border-right: none; }
+      .stat-cell__val {
+        font-family: var(--serif);
+        font-size: 36px; font-weight: 300; color: var(--espresso);
+        line-height: 1;
+      }
+      .stat-cell__label {
+        font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      /* ── TOOLBAR ── */
+      .toolbar {
+        padding: 0 clamp(24px,5vw,80px);
+        border-bottom: 1px solid var(--stroke);
+        background: var(--cream);
+      }
+      .toolbar__inner {
+        max-width: 1180px; margin: 0 auto;
+        display: flex; align-items: center; gap: 14px;
+        padding: 16px 0;
+      }
+      .search-wrap {
+        flex: 1; display: flex; align-items: center; gap: 10px;
+        border: 1px solid var(--stroke2);
+        padding: 10px 14px; border-radius: 2px;
+        background: white;
+      }
+      .search-wrap input {
+        border: none; outline: none; width: 100%;
+        font-family: var(--sans); font-size: 13px;
+        color: var(--charcoal); background: transparent;
+      }
+      .search-wrap input::placeholder { color: var(--muted); }
+      .toolbar select {
+        border: 1px solid var(--stroke2); background: white;
+        padding: 10px 14px; border-radius: 2px;
+        font-family: var(--sans); font-size: 13px;
+        color: var(--charcoal); cursor: pointer; outline: none;
+      }
+
+      /* ── GRID ── */
+      .content { padding: 0 clamp(24px,5vw,80px); }
+      .content__inner { max-width: 1180px; margin: 0 auto; }
+
+      .gift-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0;
+        border-left: 1px solid var(--stroke);
+        border-top: 1px solid var(--stroke);
+        margin-top: 40px;
+      }
+
+      /* ── CARD ── */
+      .card {
+        border-right: 1px solid var(--stroke);
+        border-bottom: 1px solid var(--stroke);
+        background: white;
+        display: flex; flex-direction: column;
+        cursor: default;
+        transition: background .2s ease;
+        position: relative;
+        overflow: hidden;
+      }
+      .card:hover { background: var(--cream); }
+
+      .card__image-wrap {
+        position: relative;
+        aspect-ratio: 4/3;
+        background: var(--cream2);
+        overflow: hidden;
+      }
+      .card__image-wrap img {
+        width: 100%; height: 100%; object-fit: cover;
+        transition: transform .5s ease;
+        filter: sepia(8%);
+      }
+      .card:hover .card__image-wrap img { transform: scale(1.03); }
+      .card__placeholder {
+        width: 100%; height: 100%;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 44px;
+        background: linear-gradient(135deg, var(--cream2), var(--beige));
+      }
+
+      .card__status {
+        position: absolute; top: 14px; left: 14px;
+        padding: 5px 10px;
+        font-size: 10px; letter-spacing: 2px; text-transform: uppercase; font-weight: 500;
+        border: 1px solid;
+      }
+      .card__status--free {
+        background: rgba(250,248,245,0.92);
+        border-color: rgba(106,158,122,0.4);
+        color: var(--green);
+      }
+      .card__status--taken {
+        background: rgba(250,248,245,0.92);
+        border-color: rgba(196,133,106,0.4);
+        color: var(--rose);
+      }
+
+      .card__body { padding: 22px 22px 18px; flex: 1; display: flex; flex-direction: column; gap: 10px; }
+      .card__meta {
+        display: flex; align-items: center; gap: 8px;
+        font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted);
+      }
+      .card__meta-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--sand); }
+      .card__title {
+        font-family: var(--serif);
+        font-size: 22px; font-weight: 400; line-height: 1.1;
+        color: var(--espresso); letter-spacing: -0.2px;
+      }
+      .card__note { font-size: 13px; color: var(--muted); line-height: 1.55; }
+      .card__footer {
+        padding: 14px 22px;
+        border-top: 1px solid var(--stroke);
+        display: flex; align-items: center; justify-content: space-between;
+        gap: 10px;
+      }
+      .card__price {
+        font-family: var(--serif);
+        font-size: 18px; font-weight: 400; color: var(--clay);
+      }
+      .card__actions { display: flex; gap: 8px; align-items: center; }
+
+      .btn-card {
+        font-family: var(--sans);
+        font-size: 11px; letter-spacing: 1px; text-transform: uppercase; font-weight: 500;
+        border: 1px solid;
+        padding: 8px 14px; border-radius: 2px;
+        cursor: pointer; transition: all .18s ease;
+        white-space: nowrap;
+      }
+      .btn-card--reserve {
+        background: var(--espresso); color: var(--cream);
+        border-color: var(--espresso);
+      }
+      .btn-card--reserve:hover { background: var(--clay); border-color: var(--clay); }
+      .btn-card--unreserve {
+        background: transparent; color: var(--rose);
+        border-color: rgba(196,133,106,0.5);
+      }
+      .btn-card--unreserve:hover { background: rgba(196,133,106,0.08); }
+      .btn-card--disabled {
+        background: transparent; color: var(--muted);
+        border-color: var(--stroke); cursor: default;
+      }
+      .btn-card--link {
+        background: transparent; color: var(--muted);
+        border-color: var(--stroke);
+        text-decoration: none; display: inline-flex; align-items: center;
+      }
+      .btn-card--link:hover { color: var(--espresso); border-color: var(--stroke2); }
+      .btn-card--delete {
+        background: transparent; color: var(--muted);
+        border-color: var(--stroke); font-size: 14px; padding: 7px 10px;
+      }
+      .btn-card--delete:hover { color: var(--rose); border-color: rgba(196,133,106,0.4); }
+
+      /* ── RESERVED BY ── */
+      .card__reserver {
+        font-size: 11px; letter-spacing: 1px; text-transform: uppercase;
+        color: var(--rose); font-weight: 500;
+      }
+
+      /* ── EMPTY ── */
+      .empty {
+        grid-column: 1/-1;
+        padding: 80px 20px;
+        text-align: center;
+        border-right: 1px solid var(--stroke);
+        border-bottom: 1px solid var(--stroke);
+      }
+      .empty__icon { font-size: 40px; margin-bottom: 16px; }
+      .empty__title {
+        font-family: var(--serif); font-size: 28px; font-weight: 300;
+        color: var(--espresso); margin-bottom: 8px;
+      }
+      .empty__desc { font-size: 14px; color: var(--muted); }
+
+      /* ── SKELETON ── */
+      .sk-card {
+        border-right: 1px solid var(--stroke);
+        border-bottom: 1px solid var(--stroke);
+        background: white;
+      }
+      .sk-img { aspect-ratio: 4/3; background: var(--cream2); animation: shimmer 1.4s ease infinite; }
+      .sk-body { padding: 22px; display: flex; flex-direction: column; gap: 10px; }
+      .sk-line { height: 12px; border-radius: 2px; background: var(--beige); animation: shimmer 1.4s ease infinite; }
+      .sk-line--w60 { width: 60%; }
+      .sk-line--w80 { width: 80%; }
+      @keyframes shimmer {
+        0%,100% { opacity: .6; } 50% { opacity: 1; }
+      }
+
+      /* ── FOOTER ── */
+      .footer {
+        margin-top: 60px;
+        padding: 28px clamp(24px,5vw,80px);
+        border-top: 1px solid var(--stroke);
+        display: flex; align-items: center; justify-content: space-between;
+        flex-wrap: wrap; gap: 12px;
+      }
+      .footer__left {
+        font-family: var(--serif); font-size: 16px;
+        color: var(--muted); font-style: italic;
+      }
+      .footer__right {
+        display: flex; align-items: center; gap: 8px;
+        font-size: 12px; letter-spacing: 1px; text-transform: uppercase;
+        color: var(--muted);
+      }
+      .status-dot {
+        width: 8px; height: 8px; border-radius: 50%;
+        background: var(--sand);
+        transition: background .3s ease;
+      }
+      .status-dot--ok { background: var(--green); box-shadow: 0 0 0 3px rgba(106,158,122,0.2); }
+      .status-dot--err { background: var(--rose); }
+
+      /* ── MODALS ── */
+      dialog { border: none; padding: 0; background: transparent; width: min(520px, calc(100% - 32px)); }
+      dialog::backdrop { background: rgba(28,24,20,0.5); backdrop-filter: blur(3px); }
+
+      .modal-card {
+        background: var(--cream);
+        border: 1px solid var(--stroke2);
+        box-shadow: var(--shadow2);
+        overflow: hidden;
+      }
+      .modal-head {
+        padding: 24px 28px 20px;
+        border-bottom: 1px solid var(--stroke);
+        display: flex; align-items: flex-start; justify-content: space-between; gap: 14px;
+      }
+      .modal-head__title {
+        font-family: var(--serif); font-size: 26px; font-weight: 300;
+        color: var(--espresso); line-height: 1.1;
+      }
+      .modal-head__sub { font-size: 13px; color: var(--muted); margin-top: 4px; }
+      .close-btn {
+        background: none; border: 1px solid var(--stroke);
+        width: 32px; height: 32px; border-radius: 2px;
+        cursor: pointer; color: var(--muted);
+        font-size: 14px; flex-shrink: 0;
+        transition: all .15s;
+      }
+      .close-btn:hover { border-color: var(--stroke2); color: var(--espresso); }
+
+      .modal-body { padding: 24px 28px; display: flex; flex-direction: column; gap: 16px; }
+      .modal-foot {
+        padding: 18px 28px;
+        border-top: 1px solid var(--stroke);
+        display: flex; justify-content: flex-end; gap: 10px;
+      }
+
+      .field { display: flex; flex-direction: column; gap: 6px; }
+      .field label {
+        font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+        font-weight: 500; color: var(--muted);
+      }
+      .field input, .field textarea, .field select {
+        border: 1px solid var(--stroke2); background: white;
+        padding: 11px 14px; border-radius: 2px;
+        font-family: var(--sans); font-size: 14px; color: var(--charcoal);
+        outline: none; transition: border-color .15s;
+        width: 100%;
+      }
+      .field input:focus, .field textarea:focus { border-color: var(--clay); }
+      .field textarea { min-height: 80px; resize: vertical; }
+      .field-hint { font-size: 12px; color: var(--muted); margin-top: -4px; }
+      .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+      .error-box {
+        padding: 12px 14px;
+        border: 1px solid rgba(196,133,106,0.4);
+        background: rgba(196,133,106,0.08);
+        color: var(--rose);
+        font-size: 13px; border-radius: 2px;
+      }
+      .hidden { display: none !important; }
+
+      .callout {
+        padding: 14px; border: 1px solid rgba(106,158,122,0.3);
+        background: rgba(106,158,122,0.06);
+        border-radius: 2px; font-size: 13px; color: var(--espresso);
+        line-height: 1.55;
+      }
+      .steps { padding-left: 18px; }
+      .steps li { margin: 8px 0; font-size: 14px; color: var(--charcoal); line-height: 1.55; }
+
+      /* ── STATUS CHIP ── */
+      .who-chip {
+        display: flex; align-items: center; gap: 8px;
+        font-size: 12px; letter-spacing: 1px; text-transform: uppercase;
+        color: var(--muted); padding: 0 4px;
+      }
+      .who-chip__avatar {
+        width: 28px; height: 28px; border-radius: 50%;
+        background: var(--beige); border: 1px solid var(--stroke2);
+        display: flex; align-items: center; justify-content: center;
+        font-size: 12px;
+      }
+
+      /* ── RESPONSIVE ── */
+      @media (max-width: 900px) {
+        .gift-grid { grid-template-columns: repeat(2,1fr); }
+        .masthead__title { font-size: 52px; }
+      }
+      @media (max-width: 600px) {
+        .gift-grid { grid-template-columns: 1fr; }
+        .masthead__title { font-size: 40px; }
+        .stats-row { grid-template-columns: 1fr 1fr; display: grid; }
+        .stat-cell:nth-child(3) { border-right: none; }
+        .toolbar__inner { flex-wrap: wrap; }
+        .field-row { grid-template-columns: 1fr; }
+        .nav .nav-btn span:not(.icon-only) { display: none; }
+      }
+    </style>
   </head>
-
   <body>
-    <div class="bg"></div>
-    <div class="noise"></div>
 
+    <!-- TOPBAR -->
     <header class="topbar">
-      <div class="wrap topbar__inner">
-        <div class="brand">
-          <div class="brand__logo">🎁</div>
-          <div class="brand__text">
-            <div class="brand__title">Wishlist</div>
-            <div class="brand__sub">Bạn chọn quà mình tặng nè ✨</div>
+      <div class="topbar__inner">
+        <a class="brand" href="#">
+          <div class="brand__name">Wishlist</div>
+          <div class="brand__tag">Chọn quà giúp mình ✨</div>
+        </a>
+        <nav class="nav">
+          <div class="who-chip">
+            <div class="who-chip__avatar">👤</div>
+            <span id="whoLabel">Đặt tên</span>
           </div>
-        </div>
-
-        <div class="topbar__actions">
-          <button id="btnWho" class="btn btn--ghost" type="button">
-            <span class="btn__icon">👤</span>
-            <span id="whoLabel">Đang tải...</span>
-          </button>
-
-          <button id="btnHelp" class="btn btn--ghost" type="button" aria-label="Hướng dẫn">
-            <span class="btn__icon">💡</span>
-            <span>Hướng dẫn</span>
-          </button>
-
-          <button id="btnAdmin" class="btn btn--primary" type="button" title="Chế độ chủ (thêm quà)">
-            <span class="btn__icon">➕</span>
-            <span>Thêm quà</span>
-          </button>
-        </div>
+          <button id="btnWho" class="nav-btn">Đổi tên</button>
+          <button id="btnHelp" class="nav-btn">Hướng dẫn</button>
+          <button id="btnAdmin" class="nav-btn nav-btn--fill">+ Thêm quà</button>
+        </nav>
       </div>
     </header>
 
-    <main class="wrap">
-      <section class="hero">
-        <div class="hero__left">
-          <h1 class="hero__title">
-            Chọn một món bạn thích, mình sẽ <span class="glow">tặng</span> 🎉
-          </h1>
-          <p class="hero__desc">
-            Mỗi món chỉ có <b>1 người</b> giữ chỗ.
-            Website hỗ trợ tối đa <b>2 người chọn</b> (tuỳ bạn bật), cập nhật realtime.
-          </p>
+    <!-- MASTHEAD -->
+    <section class="masthead">
+      <div class="masthead__inner">
+        <div class="masthead__kicker">Danh sách quà — 2025</div>
+        <h1 class="masthead__title">Chọn một món<br>bạn <em>muốn tặng</em> mình</h1>
+        <p class="masthead__desc">Mỗi món chỉ có 1 người giữ chỗ. Nếu đổi ý, bạn có thể bỏ giữ bất kỳ lúc nào. Website cập nhật realtime ✨</p>
 
-          <div class="hero__stats">
-            <div class="stat">
-              <div class="stat__label">Người đang tham gia</div>
-              <div id="statSelectors" class="stat__value">—</div>
-            </div>
-            <div class="stat">
-              <div class="stat__label">Món đã được giữ</div>
-              <div id="statReserved" class="stat__value">—</div>
-            </div>
-            <div class="stat">
-              <div class="stat__label">Tổng số món</div>
-              <div id="statTotal" class="stat__value">—</div>
-            </div>
+        <div class="stats-row">
+          <div class="stat-cell">
+            <div class="stat-cell__val" id="statTotal">—</div>
+            <div class="stat-cell__label">Tổng số món</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-cell__val" id="statReserved">—</div>
+            <div class="stat-cell__label">Đã được giữ</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-cell__val" id="statSelectors">—</div>
+            <div class="stat-cell__label">Người tham gia</div>
           </div>
         </div>
+      </div>
+    </section>
 
-        <div class="hero__right">
-          <div class="panel">
-            <div class="panel__row">
-              <div class="chip">
-                <span class="dot dot--ok"></span>
-                <span>Realtime</span>
-              </div>
-              <div class="chip">
-                <span class="dot dot--warn"></span>
-                <span>Mỗi quà 1 người</span>
-              </div>
-              <div class="chip">
-                <span class="dot dot--info"></span>
-                <span>GitHub Pages</span>
-              </div>
-            </div>
+    <!-- TOOLBAR -->
+    <div class="toolbar">
+      <div class="toolbar__inner">
+        <div class="search-wrap">
+          <span style="color:var(--muted);font-size:14px">🔎</span>
+          <input id="searchInput" placeholder="Tìm quà… (vd: tai nghe, sách, hoa)" />
+        </div>
+        <select id="filterSelect">
+          <option value="all">Tất cả món</option>
+          <option value="available">Chưa ai giữ</option>
+          <option value="reserved">Đã được giữ</option>
+        </select>
+      </div>
+    </div>
 
-            <div class="panel__row panel__row--search">
-              <div class="search">
-                <span class="search__icon">🔎</span>
-                <input id="searchInput" class="search__input" placeholder="Tìm quà... (vd: tai nghe, sách, LEGO)" />
-              </div>
-              <select id="filterSelect" class="select">
-                <option value="all">Tất cả</option>
-                <option value="available">Chưa ai giữ</option>
-                <option value="reserved">Đã được giữ</option>
-              </select>
-            </div>
+    <!-- GRID -->
+    <div class="content" style="padding-top:0; padding-bottom:0;">
+      <div class="content__inner">
+        <div id="skeleton" class="gift-grid">
+          <!-- 6 skeleton cards -->
+          <div class="sk-card"><div class="sk-img"></div><div class="sk-body"><div class="sk-line sk-line--w60"></div><div class="sk-line sk-line--w80"></div><div class="sk-line sk-line--w60"></div></div></div>
+          <div class="sk-card"><div class="sk-img"></div><div class="sk-body"><div class="sk-line sk-line--w80"></div><div class="sk-line sk-line--w60"></div><div class="sk-line sk-line--w80"></div></div></div>
+          <div class="sk-card"><div class="sk-img"></div><div class="sk-body"><div class="sk-line sk-line--w60"></div><div class="sk-line sk-line--w80"></div><div class="sk-line sk-line--w60"></div></div></div>
+          <div class="sk-card"><div class="sk-img"></div><div class="sk-body"><div class="sk-line sk-line--w80"></div><div class="sk-line sk-line--w60"></div><div class="sk-line sk-line--w80"></div></div></div>
+          <div class="sk-card"><div class="sk-img"></div><div class="sk-body"><div class="sk-line sk-line--w60"></div><div class="sk-line sk-line--w80"></div><div class="sk-line sk-line--w60"></div></div></div>
+          <div class="sk-card"><div class="sk-img"></div><div class="sk-body"><div class="sk-line sk-line--w80"></div><div class="sk-line sk-line--w60"></div><div class="sk-line sk-line--w80"></div></div></div>
+        </div>
+        <div id="grid" class="gift-grid" style="display:none;" aria-live="polite"></div>
+      </div>
+    </div>
 
-            <div class="panel__row panel__row--hint">
-              <span class="muted">Tip:</span>
-              Click “Giữ chỗ” để chọn. Nếu đổi ý, bạn có thể “Bỏ giữ” (chỉ người đã giữ mới bỏ được).
-            </div>
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer__left">Made with ❤️ — Firebase + GitHub Pages</div>
+      <div class="footer__right">
+        <div id="statusDot" class="status-dot"></div>
+        <span id="statusText">Đang kết nối…</span>
+      </div>
+    </footer>
+
+    <!-- MODAL: HELP -->
+    <dialog id="helpModal">
+      <div class="modal-card">
+        <div class="modal-head">
+          <div>
+            <div class="modal-head__title">Hướng dẫn nhanh</div>
+            <div class="modal-head__sub">Chỉ 3 bước đơn giản</div>
           </div>
+          <button class="close-btn" id="closeHelp">✕</button>
         </div>
-      </section>
-
-      <section class="list">
-        <div id="skeleton" class="grid grid--skeleton" aria-hidden="true"></div>
-        <div id="grid" class="grid" aria-live="polite"></div>
-
-        <div id="emptyState" class="empty hidden">
-          <div class="empty__icon">🪄</div>
-          <div class="empty__title">Chưa có món quà nào</div>
-          <div class="empty__desc">
-            Bấm <b>“Thêm quà”</b> để tạo danh sách. Hoặc chỉnh sẵn mảng <code>DEFAULT_GIFTS</code> trong app.js.
-          </div>
-        </div>
-      </section>
-
-      <footer class="footer">
-        <div class="footer__left">
-          <span class="badge">Made with ❤️</span>
-          <span class="muted">— Firebase Firestore + GitHub Pages</span>
-        </div>
-        <div class="footer__right muted">
-          <span id="statusDot" class="statusDot"></span>
-          <span id="statusText">Đang kết nối...</span>
-        </div>
-      </footer>
-    </main>
-
-    <!-- Modal: help -->
-    <dialog id="helpModal" class="modal">
-      <form method="dialog" class="modal__card">
-        <div class="modal__head">
-          <div class="modal__title">💡 Hướng dẫn nhanh</div>
-          <button class="iconBtn" value="cancel" aria-label="Đóng">✕</button>
-        </div>
-
-        <div class="modal__body">
+        <div class="modal-body">
           <ol class="steps">
-            <li>Mở web, đặt <b>tên</b> của bạn (để hệ thống nhớ ai giữ món nào).</li>
-            <li>Chọn món muốn nhận: bấm <b>Giữ chỗ</b>.</li>
-            <li>Nếu đổi ý: bấm <b>Bỏ giữ</b> (chỉ người đang giữ mới bỏ được).</li>
-            <li>Website cho tối đa <b>1–2 người</b> tham gia (cấu hình trong <code>app.js</code>).</li>
+            <li>Đặt <b>tên</b> của bạn khi mở web (để hệ thống nhớ ai giữ món nào).</li>
+            <li>Chọn món muốn tặng → bấm <b>Giữ chỗ</b>.</li>
+            <li>Nếu đổi ý → bấm <b>Bỏ giữ</b> (chỉ người đang giữ mới bỏ được).</li>
           </ol>
-
           <div class="callout">
-            <div class="callout__icon">❗</div>
-            <div class="callout__text">
-              Lưu ý: đây là dự án nhỏ chạy client-side. Nếu muốn “khóa cứng” giới hạn 2 người bằng server,
-              bạn có thể thêm Cloud Functions / security rules nâng cao.
+            💡 Website cho tối đa <b>2 người</b> tham gia, cập nhật realtime. Tên được lưu trong trình duyệt của bạn.
+          </div>
+        </div>
+        <div class="modal-foot">
+          <button class="nav-btn" id="closeHelp2">Đóng</button>
+        </div>
+      </div>
+    </dialog>
+
+    <!-- MODAL: NAME -->
+    <dialog id="nameModal">
+      <div class="modal-card">
+        <div class="modal-head">
+          <div>
+            <div class="modal-head__title">Bạn tên gì?</div>
+            <div class="modal-head__sub">Tên lưu trong trình duyệt của bạn</div>
+          </div>
+          <button class="close-btn" id="closeNameModal">✕</button>
+        </div>
+        <div class="modal-body">
+          <div class="field">
+            <label>Tên hiển thị</label>
+            <input id="nameInput" placeholder="VD: An, Minh, Linh…" maxlength="32" />
+          </div>
+          <div class="field">
+            <label>Mã tham gia (nếu có)</label>
+            <input id="joinCodeInput" placeholder="Để trống nếu không cần" maxlength="32" />
+            <div class="field-hint">Bạn có thể tắt mã tham gia trong app.js</div>
+          </div>
+          <div id="nameError" class="error-box hidden"></div>
+        </div>
+        <div class="modal-foot">
+          <button class="nav-btn" id="cancelNameModal">Hủy</button>
+          <button class="nav-btn nav-btn--fill" id="saveNameBtn">Lưu tên</button>
+        </div>
+      </div>
+    </dialog>
+
+    <!-- MODAL: ADD GIFT -->
+    <dialog id="giftModal">
+      <div class="modal-card">
+        <div class="modal-head">
+          <div>
+            <div class="modal-head__title">Thêm món quà</div>
+            <div class="modal-head__sub">Điền thông tin để bạn bè dễ chọn</div>
+          </div>
+          <button class="close-btn" id="closeGiftModal">✕</button>
+        </div>
+        <div class="modal-body">
+          <div class="field">
+            <label>Tên món *</label>
+            <input id="giftTitle" placeholder="VD: Tai nghe Bluetooth Sony" maxlength="80" />
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label>Giá (tuỳ chọn)</label>
+              <input id="giftPrice" placeholder="VD: 500k" maxlength="20" />
+            </div>
+            <div class="field">
+              <label>Tag (tuỳ chọn)</label>
+              <input id="giftTag" placeholder="VD: công nghệ / sách" maxlength="24" />
             </div>
           </div>
-        </div>
-
-        <div class="modal__foot">
-          <button class="btn btn--ghost" value="cancel" type="submit">Đóng</button>
-        </div>
-      </form>
-    </dialog>
-
-    <!-- Modal: set name -->
-    <dialog id="nameModal" class="modal">
-      <form method="dialog" class="modal__card">
-        <div class="modal__head">
-          <div class="modal__title">👤 Bạn tên gì?</div>
-          <button class="iconBtn" value="cancel" aria-label="Đóng">✕</button>
-        </div>
-
-        <div class="modal__body">
-          <p class="muted">
-            Nhập tên để hệ thống ghi lại bạn đang giữ món nào. (Tên được lưu trong trình duyệt của bạn.)
-          </p>
-
-          <label class="field">
-            <span class="field__label">Tên hiển thị</span>
-            <input id="nameInput" class="input" placeholder="VD: Minh, An, Linh..." maxlength="32" />
-          </label>
-
-          <label class="field">
-            <span class="field__label">Mã tham gia (tuỳ chọn)</span>
-            <input id="joinCodeInput" class="input" placeholder="Nếu chủ web có đặt mã, nhập vào đây" maxlength="32" />
-            <span class="field__hint muted">Bạn có thể tắt/bật mã tham gia trong app.js</span>
-          </label>
-
-          <div id="nameError" class="error hidden"></div>
-        </div>
-
-        <div class="modal__foot">
-          <button class="btn btn--ghost" value="cancel" type="submit">Hủy</button>
-          <button id="saveNameBtn" class="btn btn--primary" value="confirm" type="submit">Lưu</button>
-        </div>
-      </form>
-    </dialog>
-
-    <!-- Modal: add gift -->
-    <dialog id="giftModal" class="modal">
-      <form method="dialog" class="modal__card">
-        <div class="modal__head">
-          <div class="modal__title">➕ Thêm món quà</div>
-          <button class="iconBtn" value="cancel" aria-label="Đóng">✕</button>
-        </div>
-
-        <div class="modal__body">
-          <label class="field">
-            <span class="field__label">Tên món</span>
-            <input id="giftTitle" class="input" placeholder="VD: Tai nghe Bluetooth" maxlength="80" />
-          </label>
-
-          <div class="row2">
-            <label class="field">
-              <span class="field__label">Giá (tuỳ chọn)</span>
-              <input id="giftPrice" class="input" placeholder="VD: 500k" maxlength="20" />
-            </label>
-            <label class="field">
-              <span class="field__label">Tag (tuỳ chọn)</span>
-              <input id="giftTag" class="input" placeholder="VD: công nghệ / sách / skincare" maxlength="24" />
-            </label>
+          <div class="field">
+            <label>Link mua (tuỳ chọn)</label>
+            <input id="giftLink" placeholder="https://…" />
           </div>
-
-          <label class="field">
-            <span class="field__label">Link mua (tuỳ chọn)</span>
-            <input id="giftLink" class="input" placeholder="https://..." />
-          </label>
-
-          <label class="field">
-            <span class="field__label">Ảnh (URL, tuỳ chọn)</span>
-            <input id="giftImage" class="input" placeholder="https://...jpg/png/webp" />
-          </label>
-
-          <label class="field">
-            <span class="field__label">Ghi chú (tuỳ chọn)</span>
-            <textarea id="giftNote" class="textarea" placeholder="VD: Màu đen / size M / bản có mic..." maxlength="180"></textarea>
-          </label>
-
-          <div id="giftError" class="error hidden"></div>
+          <div class="field">
+            <label>Ảnh — URL (tuỳ chọn)</label>
+            <input id="giftImage" placeholder="https://…jpg / png / webp" />
+          </div>
+          <div class="field">
+            <label>Ghi chú (tuỳ chọn)</label>
+            <textarea id="giftNote" placeholder="Màu sắc, size, phiên bản cụ thể…" maxlength="180"></textarea>
+          </div>
+          <div id="giftError" class="error-box hidden"></div>
         </div>
-
-        <div class="modal__foot">
-          <button class="btn btn--ghost" value="cancel" type="submit">Hủy</button>
-          <button id="addGiftBtn" class="btn btn--primary" value="confirm" type="submit">Thêm</button>
+        <div class="modal-foot">
+          <button class="nav-btn" id="cancelGiftModal">Hủy</button>
+          <button class="nav-btn nav-btn--fill" id="addGiftBtn">Thêm vào danh sách</button>
         </div>
-      </form>
+      </div>
     </dialog>
 
-    <script type="module" src="./app.js"></script>
+    <script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import {
+  getFirestore, collection, doc, getDoc, getDocs, setDoc, addDoc,
+  updateDoc, deleteDoc, onSnapshot, query, orderBy, serverTimestamp, runTransaction
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBnuNzI0WLu4WiYHzfa5WcJuHe1CtsJBL0",
+  authDomain: "gift-wishlist-b1cdd.firebaseapp.com",
+  projectId: "gift-wishlist-b1cdd",
+  storageBucket: "gift-wishlist-b1cdd.firebasestorage.app",
+  messagingSenderId: "266015663933",
+  appId: "1:266015663933:web:2fb7cf5eb49d9605ac8754",
+  measurementId: "G-KRJQ9WM0SZ"
+};
+
+const MAX_SELECTORS = 2;
+const REQUIRE_JOIN_CODE = false;
+const JOIN_CODE = "tangqua";
+const REQUIRE_ADMIN_CODE = true;
+const ADMIN_CODE = "admin123";
+
+const DEFAULT_GIFTS = [
+  { title: "Hoa xinh 🌷", price: "≈ 200k–800k", tag: "lãng mạn", link: "", image: "", note: "Bạn thích hoa gì (hồng/tulip/baby…)? Màu nào?" },
+  { title: "Sách hay 📚", price: "≈ 150k–450k", tag: "sách", link: "", image: "", note: "Cho mình biết thể loại bạn thích." },
+  { title: "LEGO / mô hình 🧩", price: "≈ 300k–1tr5", tag: "hobby", link: "", image: "", note: "Set nhỏ cũng được — bạn thích theme nào?" },
+  { title: "Gấu bông 🧸", price: "≈ 200k–900k", tag: "dễ thương", link: "", image: "", note: "Size vừa hay to? Màu/pattern nào?" },
+  { title: "Váy xinh 👗", price: "≈ 400k–2tr", tag: "thời trang", link: "", image: "", note: "Gửi size + style bạn thích." },
+  { title: "Quần áo ngủ 💤", price: "≈ 250k–1tr2", tag: "thoải mái", link: "", image: "", note: "Chọn chất liệu mềm. Gửi size nhé." },
+  { title: "Một bữa ăn ngon 🍜", price: "≈ tuỳ budget", tag: "hẹn hò", link: "", image: "", note: "Bạn muốn ăn gì? Mình đặt chỗ 😄" }
+];
+
+const $ = s => document.querySelector(s);
+const grid = $("#grid"), skeleton = $("#skeleton");
+const whoLabel = $("#whoLabel");
+const statTotal = $("#statTotal"), statReserved = $("#statReserved"), statSelectors = $("#statSelectors");
+const statusDot = $("#statusDot"), statusText = $("#statusText");
+const searchInput = $("#searchInput"), filterSelect = $("#filterSelect");
+const nameInput = $("#nameInput"), joinCodeInput = $("#joinCodeInput");
+const nameError = $("#nameError");
+const giftTitle = $("#giftTitle"), giftPrice = $("#giftPrice"), giftTag = $("#giftTag");
+const giftLink = $("#giftLink"), giftImage = $("#giftImage"), giftNote = $("#giftNote");
+const giftError = $("#giftError");
+
+let db, me = { name: "", id: "" }, giftsCache = [], selectorsCache = [];
+
+function uid() { return "u_" + Math.random().toString(16).slice(2) + Date.now().toString(16); }
+function esc(s) { return String(s??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;'); }
+function isUrl(u) { if (!u) return true; try { const x=new URL(u); return ['http:','https:'].includes(x.protocol); } catch { return false; } }
+function setOnline(ok, msg) {
+  statusDot.className = 'status-dot ' + (ok ? 'status-dot--ok' : 'status-dot--err');
+  statusText.textContent = msg;
+}
+function showErr(el, msg) { el.textContent = msg; el.classList.remove('hidden'); }
+function hideErr(el) { el.textContent = ''; el.classList.add('hidden'); }
+function openModal(m) { if (!m.open) m.showModal(); }
+function closeModal(m) { if (m.open) m.close(); }
+
+// Modal wire-up
+const helpModal = $("#helpModal"), nameModal = $("#nameModal"), giftModal = $("#giftModal");
+$("#btnHelp").onclick = () => openModal(helpModal);
+$("#closeHelp").onclick = () => closeModal(helpModal);
+$("#closeHelp2").onclick = () => closeModal(helpModal);
+$("#closeNameModal").onclick = () => closeModal(nameModal);
+$("#cancelNameModal").onclick = () => closeModal(nameModal);
+$("#closeGiftModal").onclick = () => closeModal(giftModal);
+$("#cancelGiftModal").onclick = () => closeModal(giftModal);
+
+$("#btnWho").onclick = () => {
+  nameInput.value = me.name || '';
+  joinCodeInput.value = '';
+  hideErr(nameError);
+  openModal(nameModal);
+  setTimeout(() => nameInput.focus(), 50);
+};
+
+$("#saveNameBtn").onclick = async (ev) => {
+  ev.preventDefault();
+  const nm = (nameInput.value||'').trim();
+  const code = (joinCodeInput.value||'').trim();
+  if (!nm || nm.length < 2) { showErr(nameError, 'Tên cần ít nhất 2 ký tự.'); return; }
+  if (REQUIRE_JOIN_CODE && code !== JOIN_CODE) { showErr(nameError, 'Mã tham gia không đúng.'); return; }
+  try {
+    await ensureSlot(me.id, nm);
+    me.name = nm;
+    localStorage.setItem('wishlist_profile', JSON.stringify(me));
+    whoLabel.textContent = me.name;
+    closeModal(nameModal);
+  } catch(e) { showErr(nameError, e?.message || 'Không thể tham gia.'); }
+};
+
+$("#btnAdmin").onclick = async () => {
+  if (!me.name) { openModal(nameModal); return; }
+  if (REQUIRE_ADMIN_CODE) {
+    const code = prompt('Nhập mã admin:');
+    if (code !== ADMIN_CODE) return;
+  }
+  clearGiftForm();
+  hideErr(giftError);
+  openModal(giftModal);
+};
+
+$("#addGiftBtn").onclick = async (ev) => {
+  ev.preventDefault();
+  hideErr(giftError);
+  const payload = {
+    title: (giftTitle.value||'').trim(),
+    price: (giftPrice.value||'').trim(),
+    tag: (giftTag.value||'').trim(),
+    link: (giftLink.value||'').trim(),
+    image: (giftImage.value||'').trim(),
+    note: (giftNote.value||'').trim()
+  };
+  if (!payload.title || payload.title.length < 2) { showErr(giftError,'Tên món cần ít nhất 2 ký tự.'); return; }
+  if (!isUrl(payload.link) || !isUrl(payload.image)) { showErr(giftError,'Link/Ảnh phải là URL hợp lệ.'); return; }
+  try {
+    await addDoc(collection(db,'gifts'), { ...payload, reservedBy:null, reservedByName:null, reservedAt:null, createdAt:serverTimestamp(), createdBy:me.id });
+    closeModal(giftModal);
+  } catch(e) { showErr(giftError,'Không thêm được. Kiểm tra Firestore rules nhé.'); }
+};
+
+searchInput.addEventListener('input', render);
+filterSelect.addEventListener('change', render);
+
+function clearGiftForm() {
+  [giftTitle, giftPrice, giftTag, giftLink, giftImage, giftNote].forEach(el => el.value = '');
+}
+
+async function init() {
+  const saved = JSON.parse(localStorage.getItem('wishlist_profile')||'null');
+  if (saved?.name && saved?.id) me = saved;
+  else { me.id = uid(); me.name = ''; }
+
+  try {
+    db = getFirestore(initializeApp(firebaseConfig));
+  } catch(e) {
+    setOnline(false, 'Firebase config lỗi');
+    return;
+  }
+
+  whoLabel.textContent = me.name || 'Đặt tên';
+
+  await ensureMetaAndSeed();
+  subscribeMeta();
+  subscribeGifts();
+
+  if (!me.name) openModal(nameModal);
+}
+
+function metaRef() { return doc(db,'meta','app'); }
+function giftsCol() { return collection(db,'gifts'); }
+
+async function ensureMetaAndSeed() {
+  const mref = metaRef();
+  const snap = await getDoc(mref);
+  if (!snap.exists()) {
+    await setDoc(mref, { selectors:[], maxSelectors:MAX_SELECTORS, createdAt:serverTimestamp() });
+  }
+  const all = await getDocs(giftsCol());
+  if (all.empty && DEFAULT_GIFTS.length) {
+    await Promise.all(DEFAULT_GIFTS.map(g => addDoc(giftsCol(), { ...g, reservedBy:null, reservedByName:null, reservedAt:null, createdAt:serverTimestamp(), createdBy:'seed' })));
+  }
+}
+
+async function ensureSlot(userId, userName) {
+  return runTransaction(db, async tx => {
+    const snap = await tx.get(metaRef());
+    if (!snap.exists()) throw new Error('Thiếu meta doc.');
+    const data = snap.data();
+    const max = Number(data.maxSelectors ?? MAX_SELECTORS);
+    const arr = Array.isArray(data.selectors) ? data.selectors : [];
+    const idx = arr.findIndex(x => x?.id === userId);
+    if (idx >= 0) {
+      const upd = [...arr]; upd[idx] = { ...upd[idx], name: userName };
+      tx.update(metaRef(), { selectors: upd }); return;
+    }
+    if (arr.length >= max) throw new Error(`Đã đủ ${max} người tham gia rồi 🥲`);
+    tx.update(metaRef(), { selectors: [...arr, { id:userId, name:userName, joinedAt:Date.now() }] });
+  });
+}
+
+function subscribeMeta() {
+  onSnapshot(metaRef(), snap => {
+    const data = snap.data() || {};
+    const sel = Array.isArray(data.selectors) ? data.selectors : [];
+    selectorsCache = sel.map(s => s.id);
+    statSelectors.textContent = `${sel.length}/${data.maxSelectors ?? MAX_SELECTORS}`;
+    setOnline(true, 'Đã kết nối');
+  }, err => {
+    setOnline(false, 'Mất kết nối');
+  });
+}
+
+function subscribeGifts() {
+  const q = query(giftsCol(), orderBy('createdAt','desc'));
+  onSnapshot(q, snap => {
+    giftsCache = snap.docs.map(d => ({ id:d.id, ...d.data() }));
+    skeleton.style.display = 'none';
+    grid.style.display = 'grid';
+    render();
+  }, err => {
+    setOnline(false, 'Không đọc được dữ liệu');
+    skeleton.style.display = 'none';
+    grid.style.display = 'grid';
+    grid.innerHTML = `<div class="empty"><div class="empty__icon">⚠️</div><div class="empty__title">Không thể tải dữ liệu</div><div class="empty__desc">Kiểm tra Firestore rules + firebaseConfig.</div></div>`;
+  });
+}
+
+function render() {
+  const term = (searchInput.value||'').trim().toLowerCase();
+  const filter = filterSelect.value;
+  let list = [...giftsCache];
+  if (term) list = list.filter(g => `${g.title||''} ${g.tag||''} ${g.note||''} ${g.price||''}`.toLowerCase().includes(term));
+  if (filter === 'available') list = list.filter(g => !g.reservedBy);
+  if (filter === 'reserved') list = list.filter(g => !!g.reservedBy);
+
+  statTotal.textContent = giftsCache.length;
+  statReserved.textContent = giftsCache.filter(g=>!!g.reservedBy).length;
+
+  if (!giftsCache.length) {
+    grid.innerHTML = `<div class="empty"><div class="empty__icon">🎁</div><div class="empty__title">Chưa có món quà nào</div><div class="empty__desc">Bấm "+ Thêm quà" để bắt đầu.</div></div>`;
+    return;
+  }
+  if (!list.length) {
+    grid.innerHTML = `<div class="empty"><div class="empty__icon">🔍</div><div class="empty__title">Không tìm thấy</div><div class="empty__desc">Thử từ khác nhé.</div></div>`;
+    return;
+  }
+
+  grid.innerHTML = list.map(cardHtml).join('');
+
+  grid.querySelectorAll('[data-action="toggle"]').forEach(btn => {
+    btn.addEventListener('click', e => toggleReserve(e.currentTarget.dataset.id));
+  });
+  grid.querySelectorAll('[data-action="delete"]').forEach(btn => {
+    btn.addEventListener('click', async e => {
+      const id = e.currentTarget.dataset.id;
+      if (!confirm('Xóa món này khỏi wishlist?')) return;
+      try { await deleteDoc(doc(db,'gifts',id)); } catch(err) { alert('Không xóa được.'); }
+    });
+  });
+}
+
+function cardHtml(g) {
+  const title = esc(g.title), price = esc(g.price||''), tag = esc(g.tag||'');
+  const note = esc(g.note||''), link = esc(g.link||''), img = (g.image||'').trim();
+  const isReserved = !!g.reservedBy, isMine = g.reservedBy && me?.id && g.reservedBy === me.id;
+  const reservedName = esc(g.reservedByName||'Ai đó');
+  const canDelete = me?.id && g.createdBy === me.id;
+
+  const statusBadge = isReserved
+    ? `<div class="card__status card__status--taken">Đã giữ: ${reservedName}</div>`
+    : `<div class="card__status card__status--free">Còn trống</div>`;
+
+  const media = img && isUrl(img)
+    ? `<img src="${img}" alt="${title}" loading="lazy" referrerpolicy="no-referrer" />`
+    : `<div class="card__placeholder">🎁</div>`;
+
+  let actionBtn = '';
+  if (!me.name) {
+    actionBtn = `<button class="btn-card btn-card--reserve" data-action="toggle" data-id="${g.id}">Đặt tên để chọn</button>`;
+  } else if (!isReserved) {
+    actionBtn = `<button class="btn-card btn-card--reserve" data-action="toggle" data-id="${g.id}">Giữ chỗ</button>`;
+  } else if (isMine) {
+    actionBtn = `<button class="btn-card btn-card--unreserve" data-action="toggle" data-id="${g.id}">Bỏ giữ</button>`;
+  } else {
+    actionBtn = `<button class="btn-card btn-card--disabled" disabled>Đã có người giữ</button>`;
+  }
+
+  return `
+    <article class="card">
+      <div class="card__image-wrap">
+        ${media}
+        ${statusBadge}
+      </div>
+      <div class="card__body">
+        <div class="card__meta">
+          ${tag ? `<span>${tag}</span>` : ''}
+          ${tag && note ? `<span class="card__meta-dot"></span>` : ''}
+          ${note ? `<span>${note.length > 40 ? note.slice(0,40)+'…' : note}</span>` : ''}
+        </div>
+        <h3 class="card__title">${title}</h3>
+        ${note && note.length > 40 ? `<div class="card__note">${esc(g.note)}</div>` : ''}
+      </div>
+      <div class="card__footer">
+        <div class="card__price">${price || '—'}</div>
+        <div class="card__actions">
+          ${link ? `<a class="btn-card btn-card--link" href="${link}" target="_blank" rel="noreferrer">Link ↗</a>` : ''}
+          ${actionBtn}
+          ${canDelete ? `<button class="btn-card btn-card--delete" data-action="delete" data-id="${g.id}" title="Xóa">🗑</button>` : ''}
+        </div>
+      </div>
+    </article>`;
+}
+
+async function toggleReserve(giftId) {
+  if (!me.name) { openModal(nameModal); return; }
+  try { await ensureSlot(me.id, me.name); }
+  catch(e) { alert(e?.message || 'Không tham gia được.'); return; }
+
+  const ref = doc(db,'gifts',giftId);
+  try {
+    await runTransaction(db, async tx => {
+      const snap = await tx.get(ref);
+      if (!snap.exists()) throw new Error('Món không tồn tại.');
+      const g = snap.data();
+      if (!g.reservedBy) {
+        tx.update(ref, { reservedBy:me.id, reservedByName:me.name, reservedAt:serverTimestamp() });
+      } else if (g.reservedBy === me.id) {
+        tx.update(ref, { reservedBy:null, reservedByName:null, reservedAt:null });
+      } else {
+        throw new Error('Món này đã có người khác giữ rồi.');
+      }
+    });
+  } catch(e) { alert(e?.message || 'Không thao tác được.'); }
+}
+
+init();
+    </script>
   </body>
 </html>
