@@ -7,13 +7,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
-    <link rel="icon" href="/giftquocanh/assets/images/logo/logo.png" />
-<link rel="apple-touch-icon" href="/giftquocanh/assets/images/logo/logo.png" />
-<meta name="theme-color" content="#3a2e24" />
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="default" />
-<meta name="apple-mobile-web-app-title" content="Wishlist" />
-    <link rel="manifest" href="manifest.json" />
     <style>
       :root {
         --cream: #faf8f5;
@@ -532,9 +525,9 @@
             <input id="nameInput" placeholder="VD: An, Minh, Linh…" maxlength="32" />
           </div>
           <div class="field">
-            <label>Mã tham gia (nếu có)</label>
-            <input id="joinCodeInput" placeholder="Để trống nếu không cần" maxlength="32" />
-            <div class="field-hint">Bạn có thể tắt mã tham gia trong code</div>
+            <label>Mã người dùng *</label>
+            <input id="joinCodeInput" placeholder="VD: minhanh2026 hoặc quocanh2026" maxlength="32" />
+            <div class="field-hint">Mỗi người có 1 mã cố định để đăng nhập lại trên mọi thiết bị</div>
           </div>
           <div id="nameError" class="error-box hidden"></div>
         </div>
@@ -598,20 +591,24 @@
       } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
       const firebaseConfig = {
-    apiKey: "AIzaSyDzuow3cxGPGHmKBN9AkP67tUU-8ZnrUUA",
-    authDomain: "wishlistbmanh.firebaseapp.com",
-    projectId: "wishlistbmanh",
-    storageBucket: "wishlistbmanh.firebasestorage.app",
-    messagingSenderId: "638001796152",
-    appId: "1:638001796152:web:93f2e5fe55aae24d3442cd",
-    measurementId: "G-6ZX1TJR5F8"
-  };
+        apiKey: "AIzaSyBnuNzI0WLu4WiYHzfa5WcJuHe1CtsJBL0",
+        authDomain: "gift-wishlist-b1cdd.firebaseapp.com",
+        projectId: "gift-wishlist-b1cdd",
+        storageBucket: "gift-wishlist-b1cdd.firebasestorage.app",
+        messagingSenderId: "266015663933",
+        appId: "1:266015663933:web:2fb7cf5eb49d9605ac8754",
+        measurementId: "G-KRJQ9WM0SZ"
+      };
 
       const MAX_SELECTORS = 2;
-      const REQUIRE_JOIN_CODE = false;
-      const JOIN_CODE = "tangqua";
       const REQUIRE_ADMIN_CODE = true;
       const ADMIN_CODE = "admin123";
+
+      // 2 người cố định, dùng mã riêng để đăng nhập lại trên mọi thiết bị
+      const PARTICIPANTS = {
+        minh: { code: "minhanh2026", name: "Minh Anh" },
+        quoc: { code: "quocanh2026", name: "Quốc Anh" }
+      };
 
       const DEFAULT_GIFTS = [
         { title: "Hoa xinh 🌷", price: "≈ 200k–800k", tag: "lãng mạn", link: "", image: "", note: "Bạn thích hoa gì (hồng/tulip/baby…)? Màu nào?" },
@@ -637,9 +634,14 @@
       const giftLink = $("#giftLink"), giftImage = $("#giftImage"), giftNote = $("#giftNote");
       const giftError = $("#giftError");
 
-      let db, me = { name: "", id: "" }, giftsCache = [], selectorsCache = [];
+      let db, me = { name: "", id: "", code: "" }, giftsCache = [], selectorsCache = [];
 
       function uid() { return "u_" + Math.random().toString(16).slice(2) + Date.now().toString(16); }
+      function normalizeCode(v) { return String(v || "").trim().toLowerCase(); }
+      function getParticipantByCode(code) {
+        const normalized = normalizeCode(code);
+        return Object.values(PARTICIPANTS).find(p => p.code === normalized) || null;
+      }
       function esc(s) { return String(s ?? "").replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;'); }
       function isUrl(u) { if (!u) return true; try { const x = new URL(u); return ['http:','https:'].includes(x.protocol); } catch { return false; } }
       function setOnline(ok, msg) {
@@ -662,7 +664,7 @@
 
       $("#btnWho").onclick = () => {
         nameInput.value = me.name || "";
-        joinCodeInput.value = "";
+        joinCodeInput.value = me.code || "";
         hideErr(nameError);
         openModal(nameModal);
       };
@@ -693,22 +695,35 @@
         }
       }
 
-      async function ensureSelectorSlot(userId, userName) {
+      async function ensureSelectorSlot(userId, userName, userCode) {
         return runTransaction(db, async (tx) => {
           const snap = await tx.get(metaRef());
           if (!snap.exists()) throw new Error("Thiếu meta/app doc.");
           const data = snap.data();
           const max = Number(data.maxSelectors ?? MAX_SELECTORS);
           const arr = Array.isArray(data.selectors) ? data.selectors : [];
-          const idx = arr.findIndex(x => x?.id === userId);
-          if (idx >= 0) {
+
+          const byId = arr.findIndex(x => x?.id === userId);
+          const byCode = arr.findIndex(x => normalizeCode(x?.code) === normalizeCode(userCode));
+
+          if (byId >= 0) {
             const updated = [...arr];
-            updated[idx] = { ...updated[idx], name: userName };
+            updated[byId] = { ...updated[byId], name: userName, code: normalizeCode(userCode) };
             tx.update(metaRef(), { selectors: updated });
             return true;
           }
+
+          if (byCode >= 0) {
+            const updated = [...arr];
+            updated[byCode] = { ...updated[byCode], id: userId, name: userName, code: normalizeCode(userCode) };
+            tx.update(metaRef(), { selectors: updated });
+            return true;
+          }
+
           if (arr.length >= max) throw new Error(`Hiện đã đủ ${max} người tham gia rồi 🥲`);
-          tx.update(metaRef(), { selectors: [...arr, { id: userId, name: userName, joinedAt: Date.now() }] });
+          tx.update(metaRef(), {
+            selectors: [...arr, { id: userId, name: userName, code: normalizeCode(userCode), joinedAt: Date.now() }]
+          });
           return true;
         });
       }
@@ -877,13 +892,21 @@
       $("#saveNameBtn").onclick = async e => {
         e.preventDefault();
         hideErr(nameError);
-        const nm = (nameInput.value || "").trim();
-        const code = (joinCodeInput.value || "").trim();
-        if (!nm || nm.length < 2) return showErr(nameError, "Tên cần ít nhất 2 ký tự nha.");
-        if (REQUIRE_JOIN_CODE && code !== JOIN_CODE) return showErr(nameError, "Mã tham gia không đúng.");
+
+        const rawCode = joinCodeInput.value || "";
+        const code = normalizeCode(rawCode);
+        const participant = getParticipantByCode(code);
+        if (!participant) return showErr(nameError, "Mã người dùng không đúng.");
+
+        const typedName = (nameInput.value || "").trim();
+        const finalName = typedName || participant.name;
+        if (!finalName || finalName.length < 2) return showErr(nameError, "Tên cần ít nhất 2 ký tự nha.");
+
         try {
-          await ensureSelectorSlot(me.id, nm);
-          me.name = nm;
+          await ensureSelectorSlot(participant.code, finalName, participant.code);
+          me.id = participant.code;
+          me.code = participant.code;
+          me.name = finalName;
           localStorage.setItem("wishlist_profile", JSON.stringify(me));
           whoLabel.textContent = `Bạn: ${me.name}`;
           closeModal(nameModal);
@@ -945,7 +968,7 @@
       async function init() {
         const saved = JSON.parse(localStorage.getItem("wishlist_profile") || "null");
         if (saved?.name && saved?.id) me = saved;
-        else { me.id = uid(); me.name = ""; }
+        else { me.id = ""; me.name = ""; me.code = ""; }
         whoLabel.textContent = me.name ? `Bạn: ${me.name}` : "Đặt tên";
 
         try {
