@@ -1,969 +1,1346 @@
 <!doctype html>
 <html lang="vi">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>✨ Wishlist — Chọn quà cho mình</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
-    <link rel="icon" href="https://markbasement.com/670a7756f50314110179190f45569dc4.png" />
-<link rel="apple-touch-icon" href="https://markbasement.com/670a7756f50314110179190f45569dc4.png" />
-<meta name="theme-color" content="#3a2e24" />
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="default" />
-<meta name="apple-mobile-web-app-title" content="Wishlist" />
-    <link rel="manifest" href="manifest.json" />
-    <style>
-      :root {
-        --cream: #faf8f5;
-        --cream2: #f4f0ea;
-        --beige: #e8e1d6;
-        --sand: #c9b99a;
-        --clay: #9d7f5e;
-        --espresso: #3a2e24;
-        --charcoal: #1c1c1c;
-        --muted: #8a8178;
-        --rose: #c4856a;
-        --green: #6a9e7a;
-        --stroke: rgba(58, 46, 36, 0.12);
-        --stroke2: rgba(58, 46, 36, 0.22);
-        --serif: 'Cormorant Garamond', Georgia, serif;
-        --sans: 'DM Sans', system-ui, sans-serif;
-        --shadow2: 0 8px 40px rgba(58,46,36,0.14);
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Wishlist ✦</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+  <link rel="icon" href="https://markbasement.com/670a7756f50314110179190f45569dc4.png" />
+  <link rel="apple-touch-icon" href="https://markbasement.com/670a7756f50314110179190f45569dc4.png" />
+  <meta name="theme-color" content="#faf7f2" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Our Wishlist" />
+  <link rel="manifest" href="manifest.json" />
 
-      * { box-sizing: border-box; margin: 0; padding: 0; }
-      body {
-        font-family: var(--sans);
-        background: var(--cream);
-        color: var(--charcoal);
-        min-height: 100vh;
-        -webkit-font-smoothing: antialiased;
-      }
+  <style>
+    :root {
+      --cream:   #faf7f2;
+      --cream2:  #f3ede4;
+      --beige:   #e6ddd1;
+      --sand:    #c9b49a;
+      --clay:    #9d7265;
+      --rose:    #c2727a;
+      --rose-bg: rgba(194,114,122,.10);
+      --sage:    #7a9e87;
+      --sage-bg: rgba(122,158,135,.10);
+      --espresso:#2c1f15;
+      --charcoal:#1a1410;
+      --muted:   #8a7e75;
+      --stroke:  rgba(44,31,21,.09);
+      --stroke2: rgba(44,31,21,.19);
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans:  'DM Sans', system-ui, sans-serif;
+      --sh1: 0 2px 14px rgba(44,31,21,.07);
+      --sh2: 0 8px 40px rgba(44,31,21,.13);
+      --sh3: 0 24px 64px rgba(44,31,21,.18);
+    }
 
-      .topbar {
-        position: sticky; top: 0; z-index: 100;
-        background: var(--cream);
-        border-bottom: 1px solid var(--stroke);
-        padding: 0 clamp(24px,5vw,80px);
-      }
-      .topbar__inner {
-        max-width: 1180px; margin: 0 auto;
-        display: flex; align-items: center; justify-content: space-between;
-        height: 64px;
-      }
-      .brand {
-        display: flex; flex-direction: column; gap: 1px;
-        text-decoration: none; color: inherit;
-      }
-      .brand__name {
-        font-family: var(--serif);
-        font-size: 22px; font-weight: 500; letter-spacing: 2px;
-        text-transform: uppercase; color: var(--espresso);
-      }
-      .brand__tag {
-        font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
-        color: var(--muted); font-weight: 400;
-      }
-      .nav { display: flex; align-items: center; gap: 6px; }
-      .nav-btn {
-        border: 1px solid var(--stroke);
-        background: transparent;
-        color: var(--espresso);
-        font-family: var(--sans);
-        font-size: 12px; font-weight: 500;
-        letter-spacing: 0.8px; text-transform: uppercase;
-        padding: 8px 16px; cursor: pointer;
-        border-radius: 2px;
-        transition: all .2s ease;
-      }
-      .nav-btn:hover { background: var(--cream2); border-color: var(--stroke2); }
-      .nav-btn--fill {
-        background: var(--espresso); color: var(--cream);
-        border-color: var(--espresso);
-      }
-      .nav-btn--fill:hover { background: var(--clay); border-color: var(--clay); }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--sans);
+      background: var(--cream);
+      color: var(--charcoal);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
 
-      .masthead {
-        border-bottom: 1px solid var(--stroke);
-        padding: clamp(40px,7vw,80px) clamp(24px,5vw,80px) 0;
-      }
-      .masthead__inner { max-width: 1180px; margin: 0 auto; }
-      .masthead__kicker {
-        font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
-        color: var(--clay); font-weight: 500; margin-bottom: 14px;
-        display: flex; align-items: center; gap: 10px;
-      }
-      .masthead__kicker::before {
-        content: ''; display: block;
-        width: 28px; height: 1px; background: var(--clay);
-      }
-      .masthead__title {
-        font-family: var(--serif);
-        font-size: clamp(48px,7vw,96px);
-        font-weight: 300; line-height: 0.92;
-        letter-spacing: -1px; color: var(--espresso);
-        margin-bottom: 24px;
-      }
-      .masthead__title em { font-style: italic; color: var(--clay); }
-      .masthead__desc {
-        font-size: 15px; color: var(--muted);
-        max-width: 46ch; line-height: 1.65; margin-bottom: 36px;
-      }
+    /* subtle grain */
+    body::after {
+      content: '';
+      position: fixed; inset: 0; pointer-events: none; z-index: 999;
+      opacity: .35;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.055'/%3E%3C/svg%3E");
+    }
 
-      .stats-row {
-        display: flex; gap: 0;
-        border-top: 1px solid var(--stroke);
-      }
-      .stat-cell {
-        flex: 1; padding: 20px 0;
-        border-right: 1px solid var(--stroke);
-        display: flex; flex-direction: column; gap: 4px;
-      }
-      .stat-cell:last-child { border-right: none; }
-      .stat-cell__val {
-        font-family: var(--serif);
-        font-size: 36px; font-weight: 300; color: var(--espresso);
-        line-height: 1;
-      }
-      .stat-cell__label {
-        font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
-        color: var(--muted);
-      }
+    .wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(20px, 5vw, 80px);
+    }
 
-      .toolbar {
-        padding: 0 clamp(24px,5vw,80px);
-        border-bottom: 1px solid var(--stroke);
-        background: var(--cream);
-      }
-      .toolbar__inner {
-        max-width: 1180px; margin: 0 auto;
-        display: flex; align-items: center; gap: 14px;
-        padding: 16px 0;
-      }
-      .search-wrap {
-        flex: 1; display: flex; align-items: center; gap: 10px;
-        border: 1px solid var(--stroke2);
-        padding: 10px 14px; border-radius: 2px;
-        background: white;
-      }
-      .search-wrap input {
-        border: none; outline: none; width: 100%;
-        font-family: var(--sans); font-size: 13px;
-        color: var(--charcoal); background: transparent;
-      }
-      .toolbar select {
-        border: 1px solid var(--stroke2); background: white;
-        padding: 10px 14px; border-radius: 2px;
-        font-family: var(--sans); font-size: 13px;
-        color: var(--charcoal); cursor: pointer; outline: none;
-      }
+    /* ── TOPBAR ── */
+    .topbar {
+      position: sticky; top: 0; z-index: 200;
+      background: rgba(250,247,242,.9);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--stroke);
+    }
+    .topbar__inner {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 62px; gap: 10px;
+    }
+    .brand { text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: 1px; }
+    .brand__name {
+      font-family: var(--serif); font-size: 21px; font-weight: 500;
+      letter-spacing: 3px; text-transform: uppercase; color: var(--espresso); line-height: 1;
+    }
+    .brand__sub { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); }
+    .topbar__nav { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+    .who-label { font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); padding: 0 2px; }
 
-      .content { padding: 0 clamp(24px,5vw,80px); }
-      .content__inner { max-width: 1180px; margin: 0 auto; }
+    /* ── BUTTONS ── */
+    .btn {
+      border: 1px solid var(--stroke2); background: transparent; color: var(--espresso);
+      font-family: var(--sans); font-size: 11px; font-weight: 500;
+      letter-spacing: 1px; text-transform: uppercase;
+      padding: 8px 14px; border-radius: 2px; cursor: pointer;
+      transition: all .18s ease; white-space: nowrap; display: inline-flex; align-items: center; gap: 5px;
+    }
+    .btn:hover { background: var(--cream2); border-color: var(--sand); }
+    .btn--fill { background: var(--espresso); color: var(--cream); border-color: var(--espresso); }
+    .btn--fill:hover { background: var(--clay); border-color: var(--clay); }
+    .btn--rose { background: var(--rose); color: white; border-color: var(--rose); }
+    .btn--rose:hover { opacity: .88; }
+    .btn--ghost { border-color: var(--stroke); color: var(--muted); }
+    .btn--ghost:hover { color: var(--espresso); border-color: var(--stroke2); }
 
-      .gift-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 0;
-        border-left: 1px solid var(--stroke);
-        border-top: 1px solid var(--stroke);
-        margin-top: 40px;
-      }
+    /* ── HERO ── */
+    .hero {
+      padding: clamp(48px,8vw,100px) 0 0;
+      border-bottom: 1px solid var(--stroke);
+    }
+    .hero__eyebrow {
+      font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--clay); font-weight: 500;
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 22px;
+    }
+    .hero__eyebrow::before { content:''; display:block; width:32px; height:1px; background:var(--clay); }
+    .hero__title {
+      font-family: var(--serif);
+      font-size: clamp(52px,8.5vw,110px);
+      font-weight: 300; line-height: .88;
+      letter-spacing: -2px; color: var(--espresso);
+      margin-bottom: 32px;
+    }
+    .hero__title em { font-style: italic; color: var(--clay); }
+    .hero__grid { display: grid; grid-template-columns: 1fr auto; gap: 28px; align-items: end; margin-bottom: 36px; }
+    .hero__desc { font-size: 15px; color: var(--muted); line-height: 1.7; max-width: 44ch; }
 
-      .card, .sk-card {
-        border-right: 1px solid var(--stroke);
-        border-bottom: 1px solid var(--stroke);
-        background: white;
-      }
-      .card {
-        display: flex; flex-direction: column;
-        transition: background .2s ease;
-        position: relative;
-        overflow: hidden;
-      }
-      .card:hover { background: var(--cream); }
+    /* countdown */
+    .countdown { text-align: right; }
+    .countdown__label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+    .countdown__val {
+      font-family: var(--serif);
+      font-size: clamp(44px,5.5vw,72px);
+      font-weight: 300; line-height: 1; color: var(--espresso);
+    }
+    .countdown__val strong { color: var(--clay); font-weight: 300; }
+    .countdown__event { font-family: var(--serif); font-size: 15px; font-style: italic; color: var(--clay); margin-top: 3px; }
+    .countdown--none { display: none; }
 
-      .card__image-wrap {
-        position: relative;
-        aspect-ratio: 4/3;
-        background: var(--cream2);
-        overflow: hidden;
-      }
-      .card__image-wrap img {
-        width: 100%; height: 100%; object-fit: cover;
-        transition: transform .5s ease;
-        filter: sepia(8%);
-      }
-      .card:hover .card__image-wrap img { transform: scale(1.03); }
-      .card__placeholder {
-        width: 100%; height: 100%;
-        display: flex; align-items: center; justify-content: center;
-        font-size: 44px;
-        background: linear-gradient(135deg, var(--cream2), var(--beige));
-      }
+    /* stats */
+    .stats-bar { display: flex; border-top: 1px solid var(--stroke); }
+    .stat { flex:1; padding: 22px 0; border-right:1px solid var(--stroke); display:flex; flex-direction:column; gap:4px; }
+    .stat:last-child { border-right: none; }
+    .stat__val { font-family: var(--serif); font-size: 34px; font-weight: 300; color: var(--espresso); line-height: 1; }
+    .stat__label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
 
-      .card__status {
-        position: absolute; top: 14px; left: 14px;
-        padding: 5px 10px;
-        font-size: 10px; letter-spacing: 2px; text-transform: uppercase; font-weight: 500;
-        border: 1px solid;
-        background: rgba(250,248,245,0.92);
-      }
-      .card__status--free {
-        border-color: rgba(106,158,122,0.4);
-        color: var(--green);
-      }
-      .card__status--taken {
-        border-color: rgba(196,133,106,0.4);
-        color: var(--rose);
-      }
+    /* ── WISHLIST TABS ── */
+    .list-tabs { border-bottom: 1px solid var(--stroke); padding-top: 36px; }
+    .list-tabs__row { display: flex; gap: 0; align-items: flex-end; }
+    .ltab {
+      font-family: var(--serif);
+      font-size: clamp(20px,3vw,30px); font-weight: 400;
+      color: var(--muted);
+      padding: 0 0 18px; margin-right: 44px;
+      border: none; background: none; cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: color .2s, border-color .2s; white-space: nowrap;
+    }
+    .ltab:hover { color: var(--espresso); }
+    .ltab.active { color: var(--espresso); border-bottom-color: var(--espresso); }
+    .ltab em { font-style: italic; color: var(--clay); }
+    .ltab .ltab-owner-note {
+      font-family: var(--sans);
+      font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--sage); vertical-align: middle; margin-left: 8px;
+    }
 
-      .card__body { padding: 22px 22px 18px; flex: 1; display: flex; flex-direction: column; gap: 10px; }
-      .card__meta {
-        display: flex; align-items: center; gap: 8px;
-        font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted);
-      }
-      .card__meta-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--sand); }
-      .card__title {
-        font-family: var(--serif);
-        font-size: 22px; font-weight: 400; line-height: 1.1;
-        color: var(--espresso);
-      }
-      .card__note { font-size: 13px; color: var(--muted); line-height: 1.55; }
-      .card__footer {
-        padding: 14px 22px;
-        border-top: 1px solid var(--stroke);
-        display: flex; align-items: center; justify-content: space-between;
-        gap: 10px;
-      }
-      .card__price {
-        font-family: var(--serif);
-        font-size: 18px; font-weight: 400; color: var(--clay);
-      }
-      .card__actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-      .card__reserver {
-        font-size: 11px; letter-spacing: 1px; text-transform: uppercase;
-        color: var(--rose); font-weight: 500;
-      }
+    /* ── TOOLBAR ── */
+    .toolbar { padding: 14px 0; border-bottom: 1px solid var(--stroke); display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .search-wrap {
+      flex: 1; min-width: 180px;
+      display: flex; align-items: center; gap: 8px;
+      border: 1px solid var(--stroke2); padding: 9px 12px; border-radius: 2px; background: white;
+    }
+    .search-wrap input { border: none; outline: none; width: 100%; font-family: var(--sans); font-size: 13px; color: var(--charcoal); background: transparent; }
+    .toolbar select {
+      border: 1px solid var(--stroke2); background: white;
+      padding: 9px 12px; border-radius: 2px;
+      font-family: var(--sans); font-size: 13px; color: var(--charcoal); outline: none; cursor: pointer;
+    }
+    .surprise-btn {
+      border: 1px solid var(--stroke); background: transparent; color: var(--muted);
+      font-family: var(--sans); font-size: 11px; font-weight: 500;
+      letter-spacing: 1px; text-transform: uppercase;
+      padding: 9px 13px; border-radius: 2px; cursor: pointer; transition: all .18s;
+    }
+    .surprise-btn.on { background: var(--espresso); color: var(--cream); border-color: var(--espresso); }
 
-      .btn-card {
-        font-family: var(--sans);
-        font-size: 11px; letter-spacing: 1px; text-transform: uppercase; font-weight: 500;
-        border: 1px solid;
-        padding: 8px 14px; border-radius: 2px;
-        cursor: pointer; transition: all .18s ease;
-        white-space: nowrap;
-        text-decoration: none;
-      }
-      .btn-card--reserve {
-        background: var(--espresso); color: var(--cream);
-        border-color: var(--espresso);
-      }
-      .btn-card--reserve:hover { background: var(--clay); border-color: var(--clay); }
-      .btn-card--unreserve {
-        background: transparent; color: var(--rose);
-        border-color: rgba(196,133,106,0.5);
-      }
-      .btn-card--disabled {
-        background: transparent; color: var(--muted);
-        border-color: var(--stroke); cursor: default;
-      }
-      .btn-card--link {
-        background: transparent; color: var(--muted);
-        border-color: var(--stroke);
-        display: inline-flex; align-items: center;
-      }
-      .btn-card--delete {
-        background: transparent; color: var(--muted);
-        border-color: var(--stroke); font-size: 14px; padding: 7px 10px;
-      }
+    /* ── GIFT GRID ── */
+    .content { padding: 36px 0 64px; }
+    .gift-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
 
-      .empty {
-        grid-column: 1/-1;
-        padding: 80px 20px;
-        text-align: center;
-        border-right: 1px solid var(--stroke);
-        border-bottom: 1px solid var(--stroke);
-        background: white;
-      }
-      .empty__icon { font-size: 40px; margin-bottom: 16px; }
-      .empty__title {
-        font-family: var(--serif); font-size: 28px; font-weight: 300;
-        color: var(--espresso); margin-bottom: 8px;
-      }
-      .empty__desc { font-size: 14px; color: var(--muted); }
+    .card {
+      background: white; border: 1px solid var(--stroke); border-radius: 3px;
+      overflow: hidden; display: flex; flex-direction: column;
+      transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: var(--sh2); border-color: var(--stroke2); }
+    .card--mine { border-color: rgba(194,114,122,.45); box-shadow: 0 0 0 1px rgba(194,114,122,.3), var(--sh1); }
 
-      .sk-img { aspect-ratio: 4/3; background: var(--cream2); animation: shimmer 1.4s ease infinite; }
-      .sk-body { padding: 22px; display: flex; flex-direction: column; gap: 10px; }
-      .sk-line { height: 12px; border-radius: 2px; background: var(--beige); animation: shimmer 1.4s ease infinite; }
-      .sk-line--w60 { width: 60%; }
-      .sk-line--w80 { width: 80%; }
-      @keyframes shimmer {
-        0%,100% { opacity: .6; } 50% { opacity: 1; }
-      }
+    .card__media { aspect-ratio: 4/3; overflow: hidden; background: var(--cream2); position: relative; }
+    .card__media img { width:100%; height:100%; object-fit:cover; filter:sepia(6%); transition: transform .5s ease; }
+    .card:hover .card__media img { transform: scale(1.04); }
+    .card__fallback { width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-size:42px; background: linear-gradient(135deg, var(--cream2), var(--beige)); }
 
-      .footer {
-        margin-top: 60px;
-        padding: 28px clamp(24px,5vw,80px);
-        border-top: 1px solid var(--stroke);
-        display: flex; align-items: center; justify-content: space-between;
-        flex-wrap: wrap; gap: 12px;
-      }
-      .footer__left {
-        font-family: var(--serif); font-size: 16px;
-        color: var(--muted); font-style: italic;
-      }
-      .footer__right {
-        display: flex; align-items: center; gap: 8px;
-        font-size: 12px; letter-spacing: 1px; text-transform: uppercase;
-        color: var(--muted);
-      }
-      .status-dot {
-        width: 8px; height: 8px; border-radius: 50%;
-        background: var(--sand);
-      }
-      .status-dot--ok { background: var(--green); box-shadow: 0 0 0 3px rgba(106,158,122,0.2); }
-      .status-dot--err { background: var(--rose); }
+    .card__badge {
+      position: absolute; top: 12px; left: 12px;
+      padding: 4px 10px; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+      font-family: var(--sans); font-weight: 500;
+      background: rgba(250,247,242,.92); border: 1px solid;
+      backdrop-filter: blur(4px);
+    }
+    .card__badge--free { border-color: rgba(122,158,135,.4); color: var(--sage); }
+    .card__badge--taken { border-color: rgba(194,114,122,.4); color: var(--rose); }
 
-      dialog { border: none; padding: 0; background: transparent; width: min(520px, calc(100% - 32px)); }
-      dialog::backdrop { background: rgba(28,24,20,0.5); backdrop-filter: blur(3px); }
-      .modal-card {
-        background: var(--cream);
-        border: 1px solid var(--stroke2);
-        box-shadow: var(--shadow2);
-        overflow: hidden;
-      }
-      .modal-head {
-        padding: 24px 28px 20px;
-        border-bottom: 1px solid var(--stroke);
-        display: flex; align-items: flex-start; justify-content: space-between; gap: 14px;
-      }
-      .modal-head__title {
-        font-family: var(--serif); font-size: 26px; font-weight: 300;
-        color: var(--espresso); line-height: 1.1;
-      }
-      .modal-head__sub { font-size: 13px; color: var(--muted); margin-top: 4px; }
-      .close-btn {
-        background: none; border: 1px solid var(--stroke);
-        width: 32px; height: 32px; border-radius: 2px;
-        cursor: pointer; color: var(--muted);
-      }
-      .modal-body { padding: 24px 28px; display: flex; flex-direction: column; gap: 16px; }
-      .modal-foot {
-        padding: 18px 28px;
-        border-top: 1px solid var(--stroke);
-        display: flex; justify-content: flex-end; gap: 10px;
-      }
-      .field { display: flex; flex-direction: column; gap: 6px; }
-      .field label {
-        font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
-        font-weight: 500; color: var(--muted);
-      }
-      .field input, .field textarea {
-        border: 1px solid var(--stroke2); background: white;
-        padding: 11px 14px; border-radius: 2px;
-        font-family: var(--sans); font-size: 14px; color: var(--charcoal);
-        outline: none; width: 100%;
-      }
-      .field textarea { min-height: 80px; resize: vertical; }
-      .field-hint { font-size: 12px; color: var(--muted); margin-top: -4px; }
-      .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-      .error-box {
-        padding: 12px 14px;
-        border: 1px solid rgba(196,133,106,0.4);
-        background: rgba(196,133,106,0.08);
-        color: var(--rose);
-        font-size: 13px; border-radius: 2px;
-      }
-      .hidden { display: none !important; }
-      .callout {
-        padding: 14px; border: 1px solid rgba(106,158,122,0.3);
-        background: rgba(106,158,122,0.06);
-        border-radius: 2px; font-size: 13px; color: var(--espresso);
-        line-height: 1.55;
-      }
-      .steps { padding-left: 18px; }
-      .steps li { margin: 8px 0; font-size: 14px; color: var(--charcoal); line-height: 1.55; }
-      .who-chip {
-        display: flex; align-items: center; gap: 8px;
-        font-size: 12px; letter-spacing: 1px; text-transform: uppercase;
-        color: var(--muted); padding: 0 4px;
-      }
-      .who-chip__avatar {
-        width: 28px; height: 28px; border-radius: 50%;
-        background: var(--beige); border: 1px solid var(--stroke2);
-        display: flex; align-items: center; justify-content: center;
-        font-size: 12px;
-      }
+    .card__body { padding: 18px 18px 14px; flex:1; display:flex; flex-direction:column; gap:8px; }
+    .card__stars { display:flex; gap:3px; }
+    .star { font-size:12px; color:var(--beige); }
+    .star.on { color:var(--rose); }
+    .card__occ { font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--clay); font-weight:500; }
+    .card__title { font-family:var(--serif); font-size:20px; font-weight:400; line-height:1.15; color:var(--espresso); }
+    .card__note { font-size:12px; color:var(--muted); line-height:1.55; }
+    .card__reserver { font-size:11px; letter-spacing:1px; text-transform:uppercase; color:var(--rose); font-weight:500; }
 
-      @media (max-width: 900px) {
-        .gift-grid { grid-template-columns: repeat(2,1fr); }
-        .masthead__title { font-size: 52px; }
-      }
-      @media (max-width: 600px) {
-        .gift-grid { grid-template-columns: 1fr; }
-        .masthead__title { font-size: 40px; }
-        .stats-row { grid-template-columns: 1fr 1fr; display: grid; }
-        .stat-cell:nth-child(3) { border-right: none; }
-        .toolbar__inner { flex-wrap: wrap; }
-        .field-row { grid-template-columns: 1fr; }
-      }
-    </style>
-  </head>
-  <body>
-    <header class="topbar">
+    .card__foot { padding:12px 18px; border-top:1px solid var(--stroke); display:flex; align-items:center; justify-content:space-between; gap:8px; }
+    .card__price { font-family:var(--serif); font-size:17px; font-weight:400; color:var(--clay); }
+    .card__actions { display:flex; gap:6px; align-items:center; }
+
+    .bsm {
+      font-family:var(--sans); font-size:10px; letter-spacing:1px; text-transform:uppercase; font-weight:500;
+      border:1px solid; padding:7px 12px; border-radius:2px;
+      cursor:pointer; transition:all .18s; white-space:nowrap;
+      text-decoration:none; display:inline-flex; align-items:center;
+      background: transparent;
+    }
+    .bsm--reserve { background:var(--espresso); color:white; border-color:var(--espresso); }
+    .bsm--reserve:hover { background:var(--clay); border-color:var(--clay); }
+    .bsm--unreserve { color:var(--rose); border-color:rgba(194,114,122,.5); }
+    .bsm--unreserve:hover { background:var(--rose-bg); }
+    .bsm--disabled { color:var(--muted); border-color:var(--stroke); cursor:default; }
+    .bsm--link { color:var(--muted); border-color:var(--stroke); }
+    .bsm--link:hover { color:var(--espresso); border-color:var(--stroke2); }
+    .bsm--del { color:var(--muted); border-color:var(--stroke); padding:6px 9px; font-size:13px; }
+    .bsm--del:hover { color:var(--rose); border-color:rgba(194,114,122,.4); }
+
+    /* ── EMPTY ── */
+    .empty { grid-column:1/-1; padding:80px 20px; text-align:center; }
+    .empty__icon { font-size:36px; margin-bottom:16px; }
+    .empty__title { font-family:var(--serif); font-size:28px; font-weight:300; color:var(--espresso); margin-bottom:8px; }
+    .empty__desc { font-size:14px; color:var(--muted); }
+
+    /* ── SKELETON ── */
+    .sk-card { background:white; border:1px solid var(--stroke); border-radius:3px; overflow:hidden; }
+    .sk-img { aspect-ratio:4/3; background:var(--cream2); animation: pulse 1.4s ease infinite; }
+    .sk-body { padding:18px; display:flex; flex-direction:column; gap:10px; }
+    .sk-line { height:12px; border-radius:2px; background:var(--beige); animation: pulse 1.4s ease infinite; }
+    .sk-60 { width:60%; } .sk-80 { width:80%; }
+    @keyframes pulse { 0%,100%{opacity:.45} 50%{opacity:1} }
+
+    /* ── AI PANEL ── */
+    .ai-panel { border-top:1px solid var(--stroke); padding:22px 0 0; margin-bottom:0; }
+    .ai-bar { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+    .ai-bar__label { font-family:var(--serif); font-size:20px; font-weight:400; color:var(--espresso); white-space:nowrap; }
+    .ai-bar__label em { font-style:italic; color:var(--clay); }
+    .ai-input {
+      flex:1; min-width:200px;
+      border:1px solid var(--stroke2); background:white;
+      padding:9px 14px; border-radius:2px;
+      font-family:var(--sans); font-size:13px; color:var(--charcoal); outline:none;
+    }
+    .ai-result { margin-top:18px; padding-bottom:28px; }
+    .ai-result__head { font-family:var(--serif); font-size:20px; font-weight:400; color:var(--espresso); margin-bottom:14px; }
+    .ai-ideas { display:flex; flex-direction:column; gap:0; border:1px solid var(--stroke); background:white; }
+    .ai-idea { display:flex; gap:16px; padding:16px 18px; border-bottom:1px solid var(--stroke); align-items:flex-start; }
+    .ai-idea:last-child { border-bottom:none; }
+    .ai-idea__n { font-family:var(--serif); font-size:24px; font-weight:300; color:var(--clay); line-height:1; min-width:28px; }
+    .ai-idea__name { font-weight:500; font-size:14px; color:var(--espresso); }
+    .ai-idea__note { font-size:13px; color:var(--muted); margin-top:2px; line-height:1.5; }
+    .ai-idea__price { font-family:var(--serif); font-size:13px; color:var(--clay); font-style:italic; }
+    .ai-msg { padding:16px 18px; font-size:13px; color:var(--muted); line-height:1.65; border:1px solid var(--stroke); background:white; }
+    .ai-msg a { color:var(--clay); }
+
+    /* ── FOOTER ── */
+    .footer { padding:24px 0; border-top:1px solid var(--stroke); display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+    .footer__l { font-family:var(--serif); font-size:15px; font-style:italic; color:var(--muted); }
+    .footer__r { display:flex; align-items:center; gap:8px; font-size:11px; letter-spacing:1px; text-transform:uppercase; color:var(--muted); }
+    .status-dot { width:8px; height:8px; border-radius:50%; background:var(--sand); }
+    .status-dot.ok { background:var(--sage); box-shadow:0 0 0 3px rgba(122,158,135,.2); }
+    .status-dot.err { background:var(--rose); }
+
+    /* ── MODALS ── */
+    dialog { border:none; padding:0; background:transparent; width:min(540px,calc(100% - 28px)); }
+    dialog::backdrop { background:rgba(28,20,14,.52); backdrop-filter:blur(5px); }
+    .mcard { background:var(--cream); border:1px solid var(--stroke2); box-shadow:var(--sh3); }
+    .mhead { padding:24px 28px 20px; border-bottom:1px solid var(--stroke); display:flex; align-items:flex-start; justify-content:space-between; gap:12px; }
+    .mhead__title { font-family:var(--serif); font-size:28px; font-weight:300; color:var(--espresso); line-height:1.05; }
+    .mhead__sub { font-size:13px; color:var(--muted); margin-top:4px; }
+    .xbtn { background:none; border:1px solid var(--stroke); width:30px; height:30px; border-radius:2px; cursor:pointer; color:var(--muted); font-size:14px; flex-shrink:0; }
+    .xbtn:hover { border-color:var(--stroke2); color:var(--espresso); }
+    .mbody { padding:22px 28px; display:flex; flex-direction:column; gap:14px; }
+    .mfoot { padding:16px 28px; border-top:1px solid var(--stroke); display:flex; justify-content:flex-end; gap:10px; }
+
+    .field { display:flex; flex-direction:column; gap:6px; }
+    .field label { font-size:10px; letter-spacing:2px; text-transform:uppercase; font-weight:500; color:var(--muted); }
+    .field input, .field textarea, .field select { border:1px solid var(--stroke2); background:white; padding:10px 14px; border-radius:2px; font-family:var(--sans); font-size:14px; color:var(--charcoal); outline:none; width:100%; }
+    .field input:focus, .field textarea:focus { border-color:var(--sand); }
+    .field textarea { min-height:76px; resize:vertical; }
+    .frow { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .fhint { font-size:12px; color:var(--muted); }
+
+    .err-box { padding:11px 14px; border:1px solid rgba(194,114,122,.4); background:rgba(194,114,122,.07); color:var(--rose); font-size:13px; border-radius:2px; }
+    .callout { padding:12px 14px; border:1px solid rgba(122,158,135,.3); background:rgba(122,158,135,.07); font-size:13px; color:var(--espresso); line-height:1.55; border-radius:2px; }
+    .steps { padding-left:18px; }
+    .steps li { margin:8px 0; font-size:14px; color:var(--charcoal); line-height:1.55; }
+
+    /* Role picker */
+    .rpicker { display:flex; gap:12px; }
+    .rbtn { flex:1; padding:20px 14px; text-align:center; border:1px solid var(--stroke2); background:white; border-radius:2px; cursor:pointer; transition:all .18s; font-family:var(--sans); }
+    .rbtn:hover { background:var(--cream2); }
+    .rbtn.picked { background:var(--espresso); color:white; border-color:var(--espresso); }
+    .rbtn__icon { font-size:28px; margin-bottom:8px; }
+    .rbtn__name { font-family:var(--serif); font-size:22px; font-weight:400; }
+    .rbtn__sub { font-size:10px; letter-spacing:1.5px; text-transform:uppercase; opacity:.6; margin-top:3px; }
+
+    /* Priority picker */
+    .ppicker { display:flex; gap:6px; }
+    .pstar { width:36px; height:36px; border:1px solid var(--stroke2); border-radius:2px; background:white; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:16px; color:var(--beige); transition:all .15s; }
+    .pstar.on { background:var(--cream2); border-color:var(--sand); color:var(--rose); }
+
+    .hidden { display:none !important; }
+
+    @keyframes fadeUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+    .card { animation: fadeUp .35s ease both; }
+
+    @media(max-width:960px) { .gift-grid { grid-template-columns: repeat(2,1fr); } .hero__grid { grid-template-columns: 1fr; } .countdown { text-align:left; } }
+    @media(max-width:600px) { .gift-grid { grid-template-columns: 1fr; } .frow { grid-template-columns: 1fr; } .ltab { font-size:18px; margin-right:22px; } .topbar__nav { gap:5px; } .btn { padding:7px 10px; font-size:10px; } .hero__title { letter-spacing:-1.5px; } .rpicker { flex-direction: column; } }
+
+    /* ── LOVE COUNTER SECTION ── */
+    .love-section {
+      border-top: 1px solid var(--stroke);
+      padding: clamp(40px,6vw,72px) 0;
+    }
+    .love-section__eyebrow {
+      font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--rose); font-weight: 500;
+      display: flex; align-items: center; gap: 12px; margin-bottom: 18px;
+    }
+    .love-section__eyebrow::before { content:''; display:block; width:32px; height:1px; background:var(--rose); }
+    .love-section__title {
+      font-family: var(--serif); font-size: clamp(32px,5vw,58px);
+      font-weight: 300; line-height: 1; letter-spacing: -1px;
+      color: var(--espresso); margin-bottom: 36px;
+    }
+    .love-section__title em { font-style: italic; color: var(--clay); }
+
+    /* Big counter */
+    .love-counter {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      gap: 1px;
+      background: var(--stroke);
+      border: 1px solid var(--stroke);
+      margin-bottom: 36px;
+    }
+    .love-counter__unit {
+      background: var(--cream);
+      padding: clamp(20px,3vw,36px) 16px;
+      text-align: center;
+      transition: background .2s;
+    }
+    .love-counter__unit:hover { background: var(--cream2); }
+    .love-counter__val {
+      font-family: var(--serif);
+      font-size: clamp(36px,5vw,72px);
+      font-weight: 300;
+      line-height: 1;
+      color: var(--espresso);
+      letter-spacing: -2px;
+    }
+    .love-counter__val span { color: var(--clay); }
+    .love-counter__lbl {
+      font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--muted); margin-top: 8px;
+    }
+
+    /* Milestones */
+    .milestones {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 16px;
+      margin-bottom: 36px;
+    }
+    .milestone {
+      border: 1px solid var(--stroke);
+      padding: 20px;
+      position: relative;
+      transition: border-color .2s, background .2s;
+    }
+    .milestone--reached {
+      border-color: rgba(194,114,122,.4);
+      background: rgba(194,114,122,.04);
+    }
+    .milestone--next {
+      border-color: rgba(201,180,154,.5);
+      background: rgba(201,180,154,.06);
+    }
+    .milestone__icon { font-size: 22px; margin-bottom: 10px; }
+    .milestone__days {
+      font-family: var(--serif); font-size: 28px;
+      font-weight: 300; color: var(--espresso); line-height: 1;
+    }
+    .milestone__label { font-size: 12px; color: var(--muted); margin-top: 4px; letter-spacing: .5px; }
+    .milestone__date { font-size: 11px; color: var(--clay); margin-top: 6px; font-style: italic; font-family: var(--serif); }
+    .milestone__badge {
+      position: absolute; top: 12px; right: 12px;
+      font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+      padding: 4px 8px; border: 1px solid;
+    }
+    .milestone__badge--done { color: var(--rose); border-color: rgba(194,114,122,.4); }
+    .milestone__badge--soon { color: var(--clay); border-color: rgba(201,180,154,.5); }
+    .milestone__badge--future { color: var(--muted); border-color: var(--stroke); }
+
+    /* Timeline */
+    .timeline { border-top: 1px solid var(--stroke); padding-top: 28px; }
+    .timeline__head {
+      font-family: var(--serif); font-size: 22px; font-weight: 400;
+      color: var(--espresso); margin-bottom: 24px;
+    }
+    .timeline__head em { font-style:italic; color:var(--clay); }
+    .timeline-list { position: relative; padding-left: 28px; }
+    .timeline-list::before {
+      content:''; position:absolute; left:0; top:0; bottom:0;
+      width:1px; background: linear-gradient(to bottom, var(--rose), var(--sand), transparent);
+    }
+    .tl-item {
+      position: relative; padding: 0 0 28px 20px;
+      animation: fadeUp .4s ease both;
+    }
+    .tl-item::before {
+      content:''; position:absolute; left:-5px; top:4px;
+      width:10px; height:10px; border-radius:50%;
+      background: var(--cream); border: 2px solid var(--sand);
+      transition: border-color .2s;
+    }
+    .tl-item--special::before { border-color: var(--rose); background: var(--rose); }
+    .tl-item__date {
+      font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--clay); margin-bottom: 4px;
+    }
+    .tl-item__title {
+      font-family: var(--serif); font-size: 18px; font-weight: 400;
+      color: var(--espresso); line-height: 1.2;
+    }
+    .tl-item__desc { font-size: 13px; color: var(--muted); margin-top: 4px; line-height: 1.55; }
+
+    /* Love next countdown pill */
+    .love-next {
+      display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+      padding: 18px 20px;
+      border: 1px solid rgba(194,114,122,.25);
+      background: rgba(194,114,122,.04);
+      margin-bottom: 32px;
+    }
+    .love-next__label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--clay); }
+    .love-next__val {
+      font-family: var(--serif); font-size: 28px; font-weight: 300;
+      color: var(--espresso); line-height: 1;
+    }
+    .love-next__event { font-family: var(--serif); font-style: italic; color: var(--clay); font-size: 15px; }
+    .love-next__divider { width:1px; height:32px; background: var(--stroke); }
+
+    @media(max-width:700px) {
+      .love-counter { grid-template-columns: repeat(2,1fr); }
+      .milestones { grid-template-columns: 1fr 1fr; }
+    }
+    @media(max-width:420px) {
+      .milestones { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="wrap">
       <div class="topbar__inner">
         <a class="brand" href="#">
-          <div class="brand__name">Wishlist</div>
-          <div class="brand__tag">Chọn quà giúp mình ✨</div>
+          <div class="brand__name">Our Wishlist</div>
+          <div class="brand__sub">for two ✦</div>
         </a>
-        <nav class="nav">
-          <div class="who-chip">
-            <div class="who-chip__avatar">👤</div>
-            <span id="whoLabel">Đặt tên</span>
-          </div>
-          <button id="btnWho" class="nav-btn">Đổi tên</button>
-          <button id="btnHelp" class="nav-btn">Hướng dẫn</button>
-          <button id="btnAdmin" class="nav-btn nav-btn--fill">+ Thêm quà</button>
+        <nav class="topbar__nav">
+          <span id="whoLabel" class="who-label"></span>
+          <button id="btnWho" class="btn">Đổi vai</button>
+          <button id="btnHelp" class="btn">Hướng dẫn</button>
+          <button id="btnAI" class="btn">✦ AI</button>
+          <button id="btnAdmin" class="btn btn--fill">+ Thêm quà</button>
         </nav>
       </div>
-    </header>
+    </div>
+  </header>
 
-    <section class="masthead">
-      <div class="masthead__inner">
-        <div class="masthead__kicker">Danh sách quà — 2026</div>
-        <h1 class="masthead__title">Chọn một món<br>bạn <em>muốn tặng</em> mình</h1>
-        <p class="masthead__desc">Mỗi món chỉ có 1 người giữ chỗ. Nếu đổi ý, bạn có thể bỏ giữ bất kỳ lúc nào. Website cập nhật realtime ✨</p>
-
-        <div class="stats-row">
-          <div class="stat-cell">
-            <div class="stat-cell__val" id="statTotal">—</div>
-            <div class="stat-cell__label">Tổng số món</div>
-          </div>
-          <div class="stat-cell">
-            <div class="stat-cell__val" id="statReserved">—</div>
-            <div class="stat-cell__label">Đã được giữ</div>
-          </div>
-          <div class="stat-cell">
-            <div class="stat-cell__val" id="statSelectors">—</div>
-            <div class="stat-cell__label">Người tham gia</div>
-          </div>
+  <!-- HERO -->
+  <section>
+    <div class="wrap">
+      <div class="hero">
+        <div class="hero__eyebrow">Danh sách quà — 2026</div>
+        <h1 class="hero__title">Our<br><em>Wishlist</em></h1>
+        <div class="hero__grid">
+          <p class="hero__desc">Mỗi món chỉ một người giữ chỗ. Chuyển tab để xem wishlist của hai người — chọn món muốn tặng và đặt trước. Realtime ✦</p>
+          <div id="countdown" class="countdown countdown--none"></div>
+        </div>
+        <div class="stats-bar">
+          <div class="stat"><div class="stat__val" id="statTotal">—</div><div class="stat__label">Tổng số món</div></div>
+          <div class="stat"><div class="stat__val" id="statReserved">—</div><div class="stat__label">Đã được giữ</div></div>
+          <div class="stat"><div class="stat__val" id="statFree">—</div><div class="stat__label">Còn trống</div></div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
+  <!-- LOVE COUNTER SECTION -->
+  <section>
+    <div class="wrap">
+      <div class="love-section">
+        <div class="love-section__eyebrow">Tình yêu của hai mình</div>
+        <h2 class="love-section__title">Chúng mình đã yêu nhau<br><em id="loveDaysHero">—</em> ngày</h2>
+
+        <!-- Live counter -->
+        <div class="love-counter">
+          <div class="love-counter__unit">
+            <div class="love-counter__val" id="lcYears"><span>—</span></div>
+            <div class="love-counter__lbl">Năm</div>
+          </div>
+          <div class="love-counter__unit">
+            <div class="love-counter__val" id="lcMonths"><span>—</span></div>
+            <div class="love-counter__lbl">Tháng</div>
+          </div>
+          <div class="love-counter__unit">
+            <div class="love-counter__val" id="lcDays"><span>—</span></div>
+            <div class="love-counter__lbl">Ngày</div>
+          </div>
+          <div class="love-counter__unit">
+            <div class="love-counter__val" id="lcHours"><span>—</span></div>
+            <div class="love-counter__lbl">Giờ</div>
+          </div>
+        </div>
+
+        <!-- Next anniversary countdown -->
+        <div class="love-next" id="loveNextBox">
+          <div>
+            <div class="love-next__label">Đếm ngược</div>
+            <div class="love-next__val" id="loveNextDays">—</div>
+          </div>
+          <div class="love-next__divider"></div>
+          <div class="love-next__event" id="loveNextEvent">ngày đến kỷ niệm tiếp theo</div>
+        </div>
+
+        <!-- Milestones -->
+        <div id="milestonesGrid" class="milestones"></div>
+
+        <!-- Timeline -->
+        <div class="timeline">
+          <div class="timeline__head">Những <em>kỷ niệm</em> đáng nhớ</div>
+          <div class="timeline-list" id="timelineList"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TABS -->
+  <div class="wrap">
+    <div class="list-tabs">
+      <div class="list-tabs__row">
+        <button id="tabA" class="ltab active">
+          Wishlist của <em id="nameA">—</em>
+        </button>
+        <button id="tabB" class="ltab">
+          Wishlist của <em id="nameB">—</em>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOOLBAR -->
+  <div class="wrap">
     <div class="toolbar">
-      <div class="toolbar__inner">
-        <div class="search-wrap">
-          <span style="color:var(--muted);font-size:14px">🔎</span>
-          <input id="searchInput" placeholder="Tìm quà… (vd: tai nghe, sách, hoa)" />
-        </div>
-        <select id="filterSelect">
-          <option value="all">Tất cả món</option>
-          <option value="available">Chưa ai giữ</option>
-          <option value="reserved">Đã được giữ</option>
-        </select>
+      <div class="search-wrap">
+        <span style="color:var(--muted);font-size:14px">🔎</span>
+        <input id="searchInput" placeholder="Tìm quà… (vd: hoa, sách, tai nghe)" />
       </div>
+      <select id="filterOcc">
+        <option value="all">Mọi dịp</option>
+        <option value="birthday">🎂 Sinh nhật</option>
+        <option value="valentine">💌 Valentine</option>
+        <option value="anniversary">🥂 Kỷ niệm</option>
+        <option value="christmas">🎄 Giáng sinh</option>
+        <option value="random">🌸 Không dịp</option>
+      </select>
+      <select id="filterStatus">
+        <option value="all">Tất cả</option>
+        <option value="available">Chưa ai giữ</option>
+        <option value="reserved">Đã được giữ</option>
+      </select>
+      <button id="surpriseBtn" class="surprise-btn">🙈 Surprise Mode</button>
     </div>
+  </div>
 
-    <div class="content" style="padding-top:0; padding-bottom:0;">
-      <div class="content__inner">
-        <div id="skeleton" class="gift-grid">
-          <div class="sk-card"><div class="sk-img"></div><div class="sk-body"><div class="sk-line sk-line--w60"></div><div class="sk-line sk-line--w80"></div><div class="sk-line sk-line--w60"></div></div></div>
-          <div class="sk-card"><div class="sk-img"></div><div class="sk-body"><div class="sk-line sk-line--w80"></div><div class="sk-line sk-line--w60"></div><div class="sk-line sk-line--w80"></div></div></div>
-          <div class="sk-card"><div class="sk-img"></div><div class="sk-body"><div class="sk-line sk-line--w60"></div><div class="sk-line sk-line--w80"></div><div class="sk-line sk-line--w60"></div></div></div>
-        </div>
-        <div id="grid" class="gift-grid hidden" aria-live="polite"></div>
-        <div id="emptyState" class="gift-grid hidden" aria-live="polite">
-          <div class="empty">
-            <div class="empty__icon">🎁</div>
-            <div class="empty__title">Chưa có món quà nào</div>
-            <div class="empty__desc">Bạn có thể bấm “+ Thêm quà” để tạo wishlist đầu tiên.</div>
-          </div>
-        </div>
+  <!-- GRID -->
+  <div class="wrap">
+    <div class="content">
+      <div id="skeleton" class="gift-grid">
+        <div class="sk-card"><div class="sk-img"></div><div class="sk-body"><div class="sk-line sk-60"></div><div class="sk-line sk-80"></div><div class="sk-line sk-60"></div></div></div>
+        <div class="sk-card"><div class="sk-img"></div><div class="sk-body"><div class="sk-line sk-80"></div><div class="sk-line sk-60"></div><div class="sk-line sk-80"></div></div></div>
+        <div class="sk-card"><div class="sk-img"></div><div class="sk-body"><div class="sk-line sk-60"></div><div class="sk-line sk-80"></div><div class="sk-line sk-60"></div></div></div>
       </div>
+      <div id="grid" class="gift-grid hidden" aria-live="polite"></div>
     </div>
+  </div>
 
+  <!-- AI PANEL -->
+  <div class="wrap hidden" id="aiWrap">
+    <div class="ai-panel">
+      <div class="ai-bar">
+        <span class="ai-bar__label">✦ Gợi ý <em>quà</em> với AI</span>
+        <input id="aiInput" class="ai-input" placeholder="VD: người yêu mình thích đọc sách, mê cà phê, thích tối giản…" maxlength="200" />
+        <button id="aiBtn" class="btn btn--fill">Gợi ý</button>
+        <button id="aiClose" class="btn btn--ghost">✕</button>
+      </div>
+      <div id="aiResult" class="ai-result hidden"></div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="wrap">
     <footer class="footer">
-      <div class="footer__left">Made with ❤️ — Firebase + GitHub Pages</div>
-      <div class="footer__right">
+      <div class="footer__l">Made with ❤️ — Firebase + GitHub Pages</div>
+      <div class="footer__r">
         <div id="statusDot" class="status-dot"></div>
         <span id="statusText">Đang kết nối…</span>
       </div>
     </footer>
+  </div>
 
-    <dialog id="helpModal">
-      <div class="modal-card">
-        <div class="modal-head">
-          <div>
-            <div class="modal-head__title">Hướng dẫn nhanh</div>
-            <div class="modal-head__sub">Chỉ 3 bước đơn giản</div>
-          </div>
-          <button class="close-btn" id="closeHelp">✕</button>
+  <!-- MODAL: HELP -->
+  <dialog id="helpModal">
+    <div class="mcard">
+      <div class="mhead">
+        <div>
+          <div class="mhead__title">Hướng dẫn nhanh</div>
+          <div class="mhead__sub">3 bước đơn giản thôi</div>
         </div>
-        <div class="modal-body">
-          <ol class="steps">
-            <li>Đặt <b>tên</b> của bạn khi mở web.</li>
-            <li>Chọn món muốn tặng → bấm <b>Giữ chỗ</b>.</li>
-            <li>Nếu đổi ý → bấm <b>Bỏ giữ</b>.</li>
-          </ol>
-          <div class="callout">💡 Website cập nhật realtime. Tên được lưu trong trình duyệt của bạn.</div>
-        </div>
-        <div class="modal-foot">
-          <button class="nav-btn" id="closeHelp2">Đóng</button>
+        <button class="xbtn" data-close="helpModal">✕</button>
+      </div>
+      <div class="mbody">
+        <ol class="steps">
+          <li>Mở app lần đầu → chọn <b>vai của bạn</b> (A hay B).</li>
+          <li>Chuyển sang <b>tab của người kia</b> → bấm <b>Giữ chỗ</b> món muốn tặng.</li>
+          <li>Đổi ý bất kỳ lúc nào → bấm <b>Bỏ giữ</b>.</li>
+        </ol>
+        <div class="callout">💡 <b>Surprise Mode</b> ẩn tên người giữ — bật lên để giữ bí mật cho tới ngày tặng.<br><br>✦ <b>Gợi ý AI</b> — nhập sở thích của người kia, Claude sẽ gợi ý ý tưởng quà cho bạn.</div>
+      </div>
+      <div class="mfoot"><button class="btn" data-close="helpModal">Đóng</button></div>
+    </div>
+  </dialog>
+
+  <!-- MODAL: ROLE PICKER -->
+  <dialog id="roleModal">
+    <div class="mcard">
+      <div class="mhead">
+        <div>
+          <div class="mhead__title">Bạn là ai? ✦</div>
+          <div class="mhead__sub">Chọn một lần — lưu trong trình duyệt của bạn</div>
         </div>
       </div>
-    </dialog>
-
-    <dialog id="nameModal">
-      <div class="modal-card">
-        <div class="modal-head">
-          <div>
-            <div class="modal-head__title">Bạn tên gì?</div>
-            <div class="modal-head__sub">Tên lưu trong trình duyệt của bạn</div>
-          </div>
-          <button class="close-btn" id="closeNameModal">✕</button>
+      <div class="mbody">
+        <div class="rpicker">
+          <button class="rbtn" id="pickA">
+            <div class="rbtn__icon">🎁</div>
+            <div class="rbtn__name" id="pickNameA">Người A</div>
+            <div class="rbtn__sub">Đây là wishlist của mình</div>
+          </button>
+          <button class="rbtn" id="pickB">
+            <div class="rbtn__icon">💝</div>
+            <div class="rbtn__name" id="pickNameB">Người B</div>
+            <div class="rbtn__sub">Đây là wishlist của mình</div>
+          </button>
         </div>
-        <div class="modal-body">
-          <div class="field">
-            <label>Tên hiển thị</label>
-            <input id="nameInput" placeholder="VD: An, Minh, Linh…" maxlength="32" />
-          </div>
-          <div class="field">
-            <label>Mã tham gia (nếu có)</label>
-            <input id="joinCodeInput" placeholder="Để trống nếu không cần" maxlength="32" />
-            <div class="field-hint">Bạn có thể tắt mã tham gia trong code</div>
-          </div>
-          <div id="nameError" class="error-box hidden"></div>
-        </div>
-        <div class="modal-foot">
-          <button class="nav-btn" id="cancelNameModal">Hủy</button>
-          <button class="nav-btn nav-btn--fill" id="saveNameBtn">Lưu tên</button>
-        </div>
+        <div id="roleErr" class="err-box hidden"></div>
       </div>
-    </dialog>
-
-    <dialog id="giftModal">
-      <div class="modal-card">
-        <div class="modal-head">
-          <div>
-            <div class="modal-head__title">Thêm món quà</div>
-            <div class="modal-head__sub">Điền thông tin để bạn bè dễ chọn</div>
-          </div>
-          <button class="close-btn" id="closeGiftModal">✕</button>
-        </div>
-        <div class="modal-body">
-          <div class="field">
-            <label>Tên món *</label>
-            <input id="giftTitle" placeholder="VD: Tai nghe Bluetooth Sony" maxlength="80" />
-          </div>
-          <div class="field-row">
-            <div class="field">
-              <label>Giá (tuỳ chọn)</label>
-              <input id="giftPrice" placeholder="VD: 500k" maxlength="20" />
-            </div>
-            <div class="field">
-              <label>Tag (tuỳ chọn)</label>
-              <input id="giftTag" placeholder="VD: công nghệ / sách" maxlength="24" />
-            </div>
-          </div>
-          <div class="field">
-            <label>Link mua (tuỳ chọn)</label>
-            <input id="giftLink" placeholder="https://…" />
-          </div>
-          <div class="field">
-            <label>Ảnh — URL (tuỳ chọn)</label>
-            <input id="giftImage" placeholder="https://…jpg / png / webp" />
-          </div>
-          <div class="field">
-            <label>Ghi chú (tuỳ chọn)</label>
-            <textarea id="giftNote" placeholder="Màu sắc, size, phiên bản cụ thể…" maxlength="180"></textarea>
-          </div>
-          <div id="giftError" class="error-box hidden"></div>
-        </div>
-        <div class="modal-foot">
-          <button class="nav-btn" id="cancelGiftModal">Hủy</button>
-          <button class="nav-btn nav-btn--fill" id="addGiftBtn">Thêm vào danh sách</button>
-        </div>
+      <div class="mfoot">
+        <button class="btn btn--fill" id="saveRoleBtn">Xác nhận</button>
       </div>
-    </dialog>
+    </div>
+  </dialog>
 
-    <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-      import {
-        getFirestore, collection, doc, getDoc, getDocs, setDoc, addDoc,
-        updateDoc, deleteDoc, onSnapshot, query, orderBy, serverTimestamp, runTransaction
-      } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+  <!-- MODAL: ADD GIFT -->
+  <dialog id="giftModal">
+    <div class="mcard">
+      <div class="mhead">
+        <div>
+          <div class="mhead__title">Thêm món quà</div>
+          <div class="mhead__sub" id="giftModalSub">Vào wishlist của bạn</div>
+        </div>
+        <button class="xbtn" data-close="giftModal">✕</button>
+      </div>
+      <div class="mbody">
+        <div class="field">
+          <label>Tên món *</label>
+          <input id="giftTitle" placeholder="VD: Tai nghe Sony WH-1000XM5" maxlength="80" />
+        </div>
+        <div class="frow">
+          <div class="field">
+            <label>Giá (tuỳ chọn)</label>
+            <input id="giftPrice" placeholder="VD: 4.500.000đ" maxlength="24" />
+          </div>
+          <div class="field">
+            <label>Dịp</label>
+            <select id="giftOcc">
+              <option value="random">🌸 Không dịp gì</option>
+              <option value="birthday">🎂 Sinh nhật</option>
+              <option value="valentine">💌 Valentine</option>
+              <option value="anniversary">🥂 Kỷ niệm</option>
+              <option value="christmas">🎄 Giáng sinh</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label>Mức độ mong muốn</label>
+          <div class="ppicker" id="ppicker">
+            <button class="pstar on" data-v="1" type="button">✦</button>
+            <button class="pstar" data-v="2" type="button">✦</button>
+            <button class="pstar" data-v="3" type="button">✦</button>
+          </div>
+          <div class="fhint">✦ Thích &nbsp;·&nbsp; ✦✦ Rất thích &nbsp;·&nbsp; ✦✦✦ Muốn lắm!</div>
+        </div>
+        <div class="field">
+          <label>Link mua (tuỳ chọn)</label>
+          <input id="giftLink" placeholder="https://shopee.vn/…" />
+        </div>
+        <div class="field">
+          <label>Ảnh — URL (tuỳ chọn)</label>
+          <input id="giftImg" placeholder="https://…jpg hoặc png" />
+        </div>
+        <div class="field">
+          <label>Ghi chú (tuỳ chọn)</label>
+          <textarea id="giftNote" placeholder="Màu sắc, size, phiên bản cụ thể…" maxlength="200"></textarea>
+        </div>
+        <div id="giftErr" class="err-box hidden"></div>
+      </div>
+      <div class="mfoot">
+        <button class="btn" data-close="giftModal">Hủy</button>
+        <button class="btn btn--fill" id="addGiftBtn">Thêm vào wishlist</button>
+      </div>
+    </div>
+  </dialog>
 
-      const firebaseConfig = {
-    apiKey: "AIzaSyDzuow3cxGPGHmKBN9AkP67tUU-8ZnrUUA",
-    authDomain: "wishlistbmanh.firebaseapp.com",
-    projectId: "wishlistbmanh",
-    storageBucket: "wishlistbmanh.firebasestorage.app",
-    messagingSenderId: "638001796152",
-    appId: "1:638001796152:web:93f2e5fe55aae24d3442cd",
-    measurementId: "G-6ZX1TJR5F8"
-  };
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+    import {
+      getFirestore, collection, doc, addDoc, getDocs,
+      deleteDoc, onSnapshot, query, orderBy, serverTimestamp, runTransaction
+    } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
-      const MAX_SELECTORS = 2;
-      const REQUIRE_JOIN_CODE = false;
-      const JOIN_CODE = "tangqua";
-      const REQUIRE_ADMIN_CODE = true;
-      const ADMIN_CODE = "admin123";
+    /* ╔══════════════════════════════════════════════╗
+       ║  ✦ CẤU HÌNH — chỉ cần chỉnh phần này thôi  ║
+       ╚══════════════════════════════════════════════╝ */
 
-      const DEFAULT_GIFTS = [
-        { title: "Hoa xinh 🌷", price: "≈ 200k–800k", tag: "lãng mạn", link: "", image: "", note: "Bạn thích hoa gì (hồng/tulip/baby…)? Màu nào?" },
-        { title: "Sách hay 📚", price: "≈ 150k–450k", tag: "sách", link: "", image: "", note: "Cho mình biết thể loại bạn thích." },
-        { title: "LEGO / mô hình 🧩", price: "≈ 300k–1tr5", tag: "hobby", link: "", image: "", note: "Set nhỏ cũng được — bạn thích theme nào?" },
-        { title: "Gấu bông 🧸", price: "≈ 200k–900k", tag: "dễ thương", link: "", image: "", note: "Size vừa hay to? Màu/pattern nào?" },
-        { title: "Váy xinh 👗", price: "≈ 400k–2tr", tag: "thời trang", link: "", image: "", note: "Gửi size + style bạn thích." },
-        { title: "Quần áo ngủ 💤", price: "≈ 250k–1tr2", tag: "thoải mái", link: "", image: "", note: "Chọn chất liệu mềm. Gửi size nhé." },
-        { title: "Một bữa ăn ngon 🍜", price: "≈ tuỳ budget", tag: "hẹn hò", link: "", image: "", note: "Bạn muốn ăn gì? Mình đặt chỗ 😄" }
-      ];
+    const firebaseConfig = {
+      apiKey:            "AIzaSyDzuow3cxGPGHmKBN9AkP67tUU-8ZnrUUA",
+      authDomain:        "wishlistbmanh.firebaseapp.com",
+      projectId:         "wishlistbmanh",
+      storageBucket:     "wishlistbmanh.firebasestorage.app",
+      messagingSenderId: "638001796152",
+      appId:             "1:638001796152:web:93f2e5fe55aae24d3442cd"
+    };
 
-      const $ = s => document.querySelector(s);
-      const grid = $("#grid");
-      const skeleton = $("#skeleton");
-      const emptyState = $("#emptyState");
-      const whoLabel = $("#whoLabel");
-      const statTotal = $("#statTotal"), statReserved = $("#statReserved"), statSelectors = $("#statSelectors");
-      const statusDot = $("#statusDot"), statusText = $("#statusText");
-      const searchInput = $("#searchInput"), filterSelect = $("#filterSelect");
-      const nameInput = $("#nameInput"), joinCodeInput = $("#joinCodeInput");
-      const nameError = $("#nameError");
-      const giftTitle = $("#giftTitle"), giftPrice = $("#giftPrice"), giftTag = $("#giftTag");
-      const giftLink = $("#giftLink"), giftImage = $("#giftImage"), giftNote = $("#giftNote");
-      const giftError = $("#giftError");
+    // ← Tên hai người (thay đúng tên nhé)
+    const PERSON_A = "Quốc Anh";
+    const PERSON_B = "Phan Minh Anh";
 
-      let db, me = { name: "", id: "" }, giftsCache = [], selectorsCache = [];
+    // ← Ngày kỷ niệm / sinh nhật gần nhất (YYYY-MM-DD). Để rỗng "" nếu không dùng.
+    const SPECIAL_DATE  = "2025-12-21";
+    const SPECIAL_LABEL = "kỷ niệm của hai mình";
 
-      function uid() { return "u_" + Math.random().toString(16).slice(2) + Date.now().toString(16); }
-      function esc(s) { return String(s ?? "").replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;'); }
-      function isUrl(u) { if (!u) return true; try { const x = new URL(u); return ['http:','https:'].includes(x.protocol); } catch { return false; } }
-      function setOnline(ok, msg) {
-        statusDot.className = 'status-dot ' + (ok ? 'status-dot--ok' : 'status-dot--err');
-        statusText.textContent = msg;
+    // ← Mã để thêm quà — NHỚ ĐỔI trước khi deploy!
+    const ADMIN_CODE = "minhanhquocanh";
+
+    // ← Dán Anthropic API key vào đây để dùng tính năng gợi ý AI.
+    //   Lấy tại: https://console.anthropic.com
+    //   ⚠️  Key sẽ hiển thị trong source code — chỉ dùng cho website riêng tư!
+    const ANTHROPIC_KEY = "";
+
+    /* ══════════════════════════════════════════════ */
+
+    const OCCASIONS = {
+      random:      "🌸 Không dịp",
+      birthday:    "🎂 Sinh nhật",
+      valentine:   "💌 Valentine",
+      anniversary: "🥂 Kỷ niệm",
+      christmas:   "🎄 Giáng sinh"
+    };
+
+    // Default seed gifts — sẽ được thêm tự động nếu database trống
+    const SEEDS = [
+      { forList:"a", title:"Hoa tulip 🌷",         price:"≈ 300k–700k",  occasion:"valentine",   priority:3, link:"", image:"https://images.unsplash.com/photo-1520763185298-1b434c919102?w=800&q=80", note:"Màu hồng hoặc tím nhạt nha 🌸" },
+      { forList:"a", title:"Sách hay 📚",            price:"≈ 150k–450k",  occasion:"birthday",    priority:2, link:"", image:"https://images.unsplash.com/photo-1512820790803-83ca734da794?w=800&q=80", note:"Thể loại tản văn, tiểu thuyết, hoặc self-help" },
+      { forList:"a", title:"Set skincare nhẹ nhàng 🧴", price:"≈ 500k–2tr", occasion:"random",   priority:2, link:"", image:"https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=800&q=80", note:"Gentle + non-fragrance, da nhạy cảm" },
+      { forList:"b", title:"Tai nghe chống ồn 🎧",  price:"≈ 1tr5–5tr",  occasion:"birthday",    priority:3, link:"", image:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&q=80", note:"Over-ear, noise cancelling, dùng khi làm việc" },
+      { forList:"b", title:"Ví da đẹp 👛",          price:"≈ 500k–2tr",  occasion:"anniversary", priority:2, link:"", image:"https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=800&q=80", note:"Màu nâu caramel hoặc đen là đẹp nhất" },
+      { forList:"b", title:"Bữa ăn tối lãng mạn 🍷", price:"≈ tuỳ chọn", occasion:"anniversary", priority:3, link:"", image:"https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80", note:"Mình đặt chỗ — nhà hàng nào bạn muốn?" },
+    ];
+
+    /* ── Helpers ── */
+    const $ = s => document.querySelector(s);
+    const esc = s => String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    function isUrl(u) { if(!u) return true; try{const x=new URL(u);return['http:','https:'].includes(x.protocol);}catch{return false;} }
+    function uid() { return 'u_'+Math.random().toString(16).slice(2)+Date.now().toString(16); }
+    function setOnline(ok,msg) { const d=$('#statusDot'),t=$('#statusText'); d.className='status-dot '+(ok?'ok':'err'); t.textContent=msg; }
+    function openModal(id) { const m=document.getElementById(id); if(!m.open) m.showModal(); }
+    function closeModal(id) { const m=document.getElementById(id); if(m.open) m.close(); }
+    function showErr(el,msg){el.textContent=msg;el.classList.remove('hidden');}
+    function hideErr(el){el.textContent='';el.classList.add('hidden');}
+    const nameOf = r => r==='a' ? PERSON_A : PERSON_B;
+
+    /* ── State ── */
+    let db;
+    let me = { role:'', id:'' };
+    let activeList = 'a';
+    let surpriseMode = false;
+    let giftsCache = [];
+    let priorityVal = 1;
+    let selectedRole = '';
+
+    /* ── Countdown ── */
+    function renderCountdown() {
+      const el = $('#countdown');
+      if (!SPECIAL_DATE) { el.classList.add('countdown--none'); return; }
+      const today = new Date();
+      const t = new Date(SPECIAL_DATE);
+      let next = new Date(today.getFullYear(), t.getMonth(), t.getDate());
+      if (next <= today) next = new Date(today.getFullYear()+1, t.getMonth(), t.getDate());
+      const days = Math.ceil((next - today) / 86400000);
+      el.classList.remove('countdown--none');
+      el.innerHTML = `
+        <div class="countdown__label">Đếm ngược</div>
+        <div class="countdown__val"><strong>${days}</strong> ngày</div>
+        <div class="countdown__event">đến ${esc(SPECIAL_LABEL)}</div>`;
+    }
+
+    /* ── Tab names ── */
+    function initNames() {
+      $('#nameA').textContent = PERSON_A;
+      $('#nameB').textContent = PERSON_B;
+      $('#pickNameA').textContent = PERSON_A;
+      $('#pickNameB').textContent = PERSON_B;
+    }
+
+    /* ── Who chip ── */
+    function updateWhoLabel() {
+      const lbl = $('#whoLabel');
+      lbl.textContent = me.role ? `Bạn: ${nameOf(me.role)}` : 'Chọn vai của bạn';
+    }
+
+    /* ── Tab switching ── */
+    function setTab(list) {
+      activeList = list;
+      $('#tabA').classList.toggle('active', list==='a');
+      $('#tabB').classList.toggle('active', list==='b');
+      // Annotate "của mình" on own list tab
+      document.querySelectorAll('.ltab-owner-note').forEach(n=>n.remove());
+      if (me.role) {
+        const ownTab = me.role==='a' ? $('#tabA') : $('#tabB');
+        const note = document.createElement('span');
+        note.className = 'ltab-owner-note';
+        note.textContent = '(của mình)';
+        ownTab.appendChild(note);
       }
-      function showErr(el, msg) { el.textContent = msg; el.classList.remove('hidden'); }
-      function hideErr(el) { el.textContent = ''; el.classList.add('hidden'); }
-      function openModal(m) { if (!m.open) m.showModal(); }
-      function closeModal(m) { if (m.open) m.close(); }
+      render();
+    }
+    $('#tabA').onclick = () => setTab('a');
+    $('#tabB').onclick = () => setTab('b');
 
-      const helpModal = $("#helpModal"), nameModal = $("#nameModal"), giftModal = $("#giftModal");
-      $("#btnHelp").onclick = () => openModal(helpModal);
-      $("#closeHelp").onclick = () => closeModal(helpModal);
-      $("#closeHelp2").onclick = () => closeModal(helpModal);
-      $("#closeNameModal").onclick = () => closeModal(nameModal);
-      $("#cancelNameModal").onclick = () => closeModal(nameModal);
-      $("#closeGiftModal").onclick = () => closeModal(giftModal);
-      $("#cancelGiftModal").onclick = () => closeModal(giftModal);
+    /* ── Surprise Mode ── */
+    $('#surpriseBtn').onclick = () => {
+      surpriseMode = !surpriseMode;
+      const btn = $('#surpriseBtn');
+      btn.classList.toggle('on', surpriseMode);
+      btn.textContent = surpriseMode ? '🙉 Surprise ON' : '🙈 Surprise Mode';
+      render();
+    };
 
-      $("#btnWho").onclick = () => {
-        nameInput.value = me.name || "";
-        joinCodeInput.value = "";
-        hideErr(nameError);
-        openModal(nameModal);
-      };
+    /* ── Firestore ── */
+    function giftsCol() { return collection(db,'gifts'); }
 
-      function metaRef() { return doc(db, "meta", "app"); }
-      function giftsCol() { return collection(db, "gifts"); }
-
-      async function ensureMetaAndSeedIfEmpty() {
-        const snap = await getDoc(metaRef());
-        if (!snap.exists()) {
-          await setDoc(metaRef(), {
-            selectors: [],
-            maxSelectors: MAX_SELECTORS,
-            createdAt: serverTimestamp()
-          });
-        }
-
-        const all = await getDocs(giftsCol());
-        if (all.empty && DEFAULT_GIFTS.length) {
-          await Promise.all(DEFAULT_GIFTS.map(g => addDoc(giftsCol(), {
-            ...g,
-            reservedBy: null,
-            reservedByName: null,
-            reservedAt: null,
-            createdAt: serverTimestamp(),
-            createdBy: "seed"
-          })));
-        }
+    async function seedIfEmpty() {
+      const snap = await getDocs(giftsCol());
+      if (snap.empty) {
+        await Promise.all(SEEDS.map(g => addDoc(giftsCol(), {
+          ...g, reservedBy:null, reservedByName:null, reservedAt:null,
+          createdAt: serverTimestamp(), createdBy: 'seed'
+        })));
       }
+    }
 
-      async function ensureSelectorSlot(userId, userName) {
-        return runTransaction(db, async (tx) => {
-          const snap = await tx.get(metaRef());
-          if (!snap.exists()) throw new Error("Thiếu meta/app doc.");
-          const data = snap.data();
-          const max = Number(data.maxSelectors ?? MAX_SELECTORS);
-          const arr = Array.isArray(data.selectors) ? data.selectors : [];
-          const idx = arr.findIndex(x => x?.id === userId);
-          if (idx >= 0) {
-            const updated = [...arr];
-            updated[idx] = { ...updated[idx], name: userName };
-            tx.update(metaRef(), { selectors: updated });
-            return true;
-          }
-          if (arr.length >= max) throw new Error(`Hiện đã đủ ${max} người tham gia rồi 🥲`);
-          tx.update(metaRef(), { selectors: [...arr, { id: userId, name: userName, joinedAt: Date.now() }] });
-          return true;
-        });
-      }
+    function subscribe() {
+      const q = query(giftsCol(), orderBy('createdAt','desc'));
+      onSnapshot(q, snap => {
+        giftsCache = snap.docs.map(d => ({id:d.id,...d.data()}));
+        $('#skeleton').classList.add('hidden');
+        $('#grid').classList.remove('hidden');
+        updateStats();
+        render();
+        setOnline(true,'Đã kết nối');
+      }, err => {
+        console.error(err);
+        setOnline(false,'Không đọc được dữ liệu');
+        $('#skeleton').classList.add('hidden');
+        $('#grid').innerHTML = `<div class="empty"><div class="empty__icon">⚠️</div><div class="empty__title">Lỗi kết nối</div><div class="empty__desc">Kiểm tra Firestore rules + firebaseConfig.</div></div>`;
+        $('#grid').classList.remove('hidden');
+      });
+    }
 
-      function subscribeMeta() {
-        onSnapshot(metaRef(), snap => {
-          const data = snap.data() || {};
-          const selectors = Array.isArray(data.selectors) ? data.selectors : [];
-          selectorsCache = selectors.map(s => s.id);
-          statSelectors.textContent = `${selectors.length}/${data.maxSelectors ?? MAX_SELECTORS}`;
-          setOnline(true, "Đã kết nối");
-        }, err => {
-          console.error(err);
-          setOnline(false, "Mất kết nối / bị chặn bởi rules");
-        });
-      }
+    function updateStats() {
+      const all = giftsCache;
+      const res = all.filter(g=>!!g.reservedBy).length;
+      $('#statTotal').textContent = all.length;
+      $('#statReserved').textContent = res;
+      $('#statFree').textContent = all.length - res;
+    }
 
-      function subscribeGifts() {
-        const q = query(giftsCol(), orderBy("createdAt", "desc"));
-        onSnapshot(q, snap => {
-          giftsCache = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-          skeleton.classList.add("hidden");
-          grid.classList.remove("hidden");
-          render();
-        }, err => {
-          console.error(err);
-          setOnline(false, "Không đọc được gifts");
-          skeleton.classList.add("hidden");
-          grid.classList.add("hidden");
-          emptyState.classList.remove("hidden");
-          emptyState.innerHTML = `<div class="empty"><div class="empty__icon">⚠️</div><div class="empty__title">Không đọc được dữ liệu</div><div class="empty__desc">Kiểm tra Firestore rules + firebaseConfig.</div></div>`;
-        });
-      }
+    /* ── Render cards ── */
+    function render() {
+      const term   = ($('#searchInput').value||'').trim().toLowerCase();
+      const occ    = $('#filterOcc').value;
+      const status = $('#filterStatus').value;
 
-      function cardHtml(g) {
-        const reserved = !!g.reservedBy;
-        const mine = g.reservedBy && g.reservedBy === me.id;
-        const actionBtn = !me.name
-          ? `<button class="btn-card btn-card--reserve" data-action="choose-name" data-id="${g.id}">Đặt tên để chọn</button>`
-          : !reserved
-            ? `<button class="btn-card btn-card--reserve" data-action="toggle" data-id="${g.id}">Giữ chỗ</button>`
-            : mine
-              ? `<button class="btn-card btn-card--unreserve" data-action="toggle" data-id="${g.id}">Bỏ giữ</button>`
-              : `<button class="btn-card btn-card--disabled" type="button">Đã có người giữ</button>`;
+      let list = giftsCache.filter(g => g.forList === activeList);
+      if (term)              list = list.filter(g => `${g.title||''} ${g.note||''} ${g.price||''}`.toLowerCase().includes(term));
+      if (occ !== 'all')     list = list.filter(g => g.occasion === occ);
+      if (status==='available') list = list.filter(g => !g.reservedBy);
+      if (status==='reserved')  list = list.filter(g => !!g.reservedBy);
 
-        return `
-          <article class="card">
-            <div class="card__image-wrap">
-              ${g.image && isUrl(g.image)
-                ? `<img src="${esc(g.image)}" alt="${esc(g.title)}" loading="lazy" referrerpolicy="no-referrer">`
-                : `<div class="card__placeholder">🎁</div>`}
-              <div class="card__status ${reserved ? 'card__status--taken' : 'card__status--free'}">
-                ${reserved ? `Đã giữ` : `Chưa ai giữ`}
-              </div>
-            </div>
-            <div class="card__body">
-              <div class="card__meta">
-                <span>${esc(g.tag || 'wishlist')}</span>
-                <span class="card__meta-dot"></span>
-                <span>${esc(g.price || 'liên hệ')}</span>
-              </div>
-              <h3 class="card__title">${esc(g.title)}</h3>
-              <div class="card__note">${esc(g.note || '')}</div>
-              ${reserved ? `<div class="card__reserver">Người giữ: ${esc(g.reservedByName || 'Ai đó')}</div>` : ''}
-            </div>
-            <div class="card__footer">
-              <div class="card__price">${esc(g.price || '')}</div>
-              <div class="card__actions">
-                ${g.link && isUrl(g.link) ? `<a class="btn-card btn-card--link" href="${esc(g.link)}" target="_blank" rel="noopener noreferrer">Mở link</a>` : ''}
-                ${actionBtn}
-                <button class="btn-card btn-card--delete" data-action="delete" data-id="${g.id}" title="Xóa">×</button>
-              </div>
-            </div>
-          </article>
-        `;
-      }
+      const g = $('#grid');
 
-      function render() {
-        const term = (searchInput.value || "").trim().toLowerCase();
-        const filter = filterSelect.value;
-        let list = [...giftsCache];
-
-        if (term) {
-          list = list.filter(g => `${g.title || ''} ${g.tag || ''} ${g.note || ''} ${g.price || ''}`.toLowerCase().includes(term));
-        }
-        if (filter === "available") list = list.filter(g => !g.reservedBy);
-        if (filter === "reserved") list = list.filter(g => !!g.reservedBy);
-
-        statTotal.textContent = String(giftsCache.length);
-        statReserved.textContent = String(giftsCache.filter(g => !!g.reservedBy).length);
-
-        if (!giftsCache.length) {
-          grid.classList.add("hidden");
-          emptyState.classList.remove("hidden");
-          emptyState.innerHTML = `<div class="empty"><div class="empty__icon">🎁</div><div class="empty__title">Chưa có món quà nào</div><div class="empty__desc">Bạn có thể bấm “+ Thêm quà” để tạo wishlist đầu tiên.</div></div>`;
-          return;
-        }
-
-        if (!list.length) {
-          grid.classList.remove("hidden");
-          emptyState.classList.add("hidden");
-          grid.innerHTML = `<div class="empty"><div class="empty__icon">🔎</div><div class="empty__title">Không tìm thấy kết quả</div><div class="empty__desc">Thử đổi từ khóa tìm kiếm hoặc bộ lọc nhé.</div></div>`;
-          return;
-        }
-
-        emptyState.classList.add("hidden");
-        grid.classList.remove("hidden");
-        grid.innerHTML = list.map(cardHtml).join("");
-
-        grid.querySelectorAll("[data-action='choose-name']").forEach(btn => {
-          btn.onclick = () => openModal(nameModal);
-        });
-        grid.querySelectorAll("[data-action='toggle']").forEach(btn => {
-          btn.onclick = async e => {
-            const id = e.currentTarget.getAttribute("data-id");
-            await toggleReserve(id);
-          };
-        });
-        grid.querySelectorAll("[data-action='delete']").forEach(btn => {
-          btn.onclick = async e => {
-            const id = e.currentTarget.getAttribute("data-id");
-            if (!confirm("Xóa món này khỏi wishlist?")) return;
-            try {
-              await deleteDoc(doc(db, "gifts", id));
-            } catch (err) {
-              console.error(err);
-              alert("Không xóa được. Kiểm tra rules.");
-            }
-          };
-        });
-      }
-
-      async function toggleReserve(id) {
-        if (!me.name) {
-          openModal(nameModal);
-          return;
-        }
-        const ref = doc(db, "gifts", id);
-        try {
-          await runTransaction(db, async tx => {
-            const snap = await tx.get(ref);
-            if (!snap.exists()) throw new Error("Món quà không tồn tại.");
-            const data = snap.data();
-            if (!data.reservedBy) {
-              tx.update(ref, {
-                reservedBy: me.id,
-                reservedByName: me.name,
-                reservedAt: serverTimestamp()
-              });
-            } else if (data.reservedBy === me.id) {
-              tx.update(ref, {
-                reservedBy: null,
-                reservedByName: null,
-                reservedAt: null
-              });
-            } else {
-              throw new Error("Món này đã có người giữ rồi.");
-            }
-          });
-        } catch (err) {
-          console.error(err);
-          alert(err.message || "Không thao tác được.");
-        }
+      if (!list.length) {
+        const isOwn = activeList === me.role;
+        const msg = (term||occ!=='all'||status!=='all')
+          ? 'Thử đổi bộ lọc hoặc từ khoá tìm kiếm nhé.'
+          : isOwn
+            ? 'Bấm "+ Thêm quà" để tạo wishlist của bạn.'
+            : `${nameOf(activeList)} chưa thêm món nào. Nhắc họ thêm đi!`;
+        g.innerHTML = `<div class="empty"><div class="empty__icon">🎁</div><div class="empty__title">Chưa có món nào</div><div class="empty__desc">${esc(msg)}</div></div>`;
+        return;
       }
 
-      $("#saveNameBtn").onclick = async e => {
-        e.preventDefault();
-        hideErr(nameError);
-        const nm = (nameInput.value || "").trim();
-        const code = (joinCodeInput.value || "").trim();
-        if (!nm || nm.length < 2) return showErr(nameError, "Tên cần ít nhất 2 ký tự nha.");
-        if (REQUIRE_JOIN_CODE && code !== JOIN_CODE) return showErr(nameError, "Mã tham gia không đúng.");
-        try {
-          await ensureSelectorSlot(me.id, nm);
-          me.name = nm;
-          localStorage.setItem("wishlist_profile", JSON.stringify(me));
-          whoLabel.textContent = `Bạn: ${me.name}`;
-          closeModal(nameModal);
-          render();
-        } catch (err) {
-          console.error(err);
-          showErr(nameError, err?.message || "Không thể tham gia lúc này.");
-        }
-      };
+      g.innerHTML = list.map((item,i) => cardHtml(item,i)).join('');
 
-      $("#btnAdmin").onclick = async () => {
-        if (!me.name) return openModal(nameModal);
-        if (REQUIRE_ADMIN_CODE) {
-          const code = prompt("Nhập mã admin để thêm quà:");
-          if (code !== ADMIN_CODE) return;
-        }
-        giftTitle.value = "";
-        giftPrice.value = "";
-        giftTag.value = "";
-        giftLink.value = "";
-        giftImage.value = "";
-        giftNote.value = "";
-        hideErr(giftError);
-        openModal(giftModal);
-      };
-
-      $("#addGiftBtn").onclick = async e => {
-        e.preventDefault();
-        hideErr(giftError);
-        const payload = {
-          title: (giftTitle.value || "").trim(),
-          price: (giftPrice.value || "").trim(),
-          tag: (giftTag.value || "").trim(),
-          link: (giftLink.value || "").trim(),
-          image: (giftImage.value || "").trim(),
-          note: (giftNote.value || "").trim()
+      g.querySelectorAll("[data-action='toggle']").forEach(btn => {
+        btn.onclick = async e => {
+          if (!me.role) return openModal('roleModal');
+          await toggleReserve(e.currentTarget.dataset.id);
         };
-        if (!payload.title || payload.title.length < 2) return showErr(giftError, "Tên món quà cần ít nhất 2 ký tự.");
-        if (!isUrl(payload.link) || !isUrl(payload.image)) return showErr(giftError, "Link/Ảnh phải là URL hợp lệ (http/https).");
-        try {
-          await addDoc(giftsCol(), {
-            ...payload,
-            reservedBy: null,
-            reservedByName: null,
-            reservedAt: null,
-            createdAt: serverTimestamp(),
-            createdBy: me.id || "anonymous"
-          });
-          closeModal(giftModal);
-        } catch (err) {
-          console.error(err);
-          showErr(giftError, "Không thêm được. Kiểm tra Firestore rules/config nhé.");
-        }
-      };
+      });
+      g.querySelectorAll("[data-action='del']").forEach(btn => {
+        btn.onclick = async e => {
+          if (!confirm('Xóa món này khỏi wishlist?')) return;
+          try { await deleteDoc(doc(db,'gifts',e.currentTarget.dataset.id)); }
+          catch(err) { alert('Không xóa được.'); }
+        };
+      });
+    }
 
-      searchInput.oninput = render;
-      filterSelect.onchange = render;
+    function starsHtml(n) {
+      return [1,2,3].map(i=>`<span class="star${i<=(n||1)?' on':''}" aria-hidden="true">✦</span>`).join('');
+    }
 
-      async function init() {
-        const saved = JSON.parse(localStorage.getItem("wishlist_profile") || "null");
-        if (saved?.name && saved?.id) me = saved;
-        else { me.id = uid(); me.name = ""; }
-        whoLabel.textContent = me.name ? `Bạn: ${me.name}` : "Đặt tên";
+    function cardHtml(g, idx) {
+      const reserved = !!g.reservedBy;
+      const mine     = reserved && g.reservedBy === me.id;
+      const isMyList = g.forList === me.role;
+      const canRes   = !!me.role && !isMyList;
+      const isCreator = g.createdBy === me.id;
 
-        try {
-          const app = initializeApp(firebaseConfig);
-          db = getFirestore(app);
-        } catch (err) {
-          console.error(err);
-          setOnline(false, "Firebase config chưa đúng");
-          return;
-        }
-
-        await ensureMetaAndSeedIfEmpty();
-        subscribeMeta();
-        subscribeGifts();
-        if (!me.name) openModal(nameModal);
+      let actionBtn = '';
+      if (!me.role) {
+        actionBtn = `<button class="bsm bsm--reserve" data-action="toggle" data-id="${g.id}">Chọn vai để giữ</button>`;
+      } else if (!reserved && canRes) {
+        actionBtn = `<button class="bsm bsm--reserve" data-action="toggle" data-id="${g.id}">Giữ chỗ</button>`;
+      } else if (mine) {
+        actionBtn = `<button class="bsm bsm--unreserve" data-action="toggle" data-id="${g.id}">Bỏ giữ</button>`;
+      } else if (reserved) {
+        actionBtn = `<button class="bsm bsm--disabled" type="button" disabled>Đã có người</button>`;
+      } else if (isMyList) {
+        actionBtn = `<span class="bsm bsm--disabled" style="cursor:default">Đây là quà của bạn</span>`;
       }
 
-      init();
-    </script>
-  </body>
+      const reserverLine = reserved
+        ? surpriseMode
+          ? `<div class="card__reserver">🙈 Đã có người giữ bí mật</div>`
+          : `<div class="card__reserver">Người giữ: ${esc(g.reservedByName||'Ai đó')}</div>`
+        : '';
+
+      return `
+        <article class="card${mine?' card--mine':''}" style="animation-delay:${idx*0.04}s">
+          <div class="card__media">
+            ${g.image && isUrl(g.image)
+              ? `<img src="${esc(g.image)}" alt="${esc(g.title)}" loading="lazy" referrerpolicy="no-referrer">`
+              : `<div class="card__fallback">🎁</div>`}
+            <div class="card__badge ${reserved?'card__badge--taken':'card__badge--free'}">
+              ${reserved?'Đã giữ':'Chưa ai giữ'}
+            </div>
+          </div>
+          <div class="card__body">
+            <div class="card__stars">${starsHtml(g.priority)}</div>
+            ${g.occasion && g.occasion!=='random' ? `<div class="card__occ">${esc(OCCASIONS[g.occasion]||'')}</div>` : ''}
+            <h3 class="card__title">${esc(g.title)}</h3>
+            ${g.note ? `<div class="card__note">${esc(g.note)}</div>` : ''}
+            ${reserverLine}
+          </div>
+          <div class="card__foot">
+            <div class="card__price">${esc(g.price||'')}</div>
+            <div class="card__actions">
+              ${g.link && isUrl(g.link) ? `<a class="bsm bsm--link" href="${esc(g.link)}" target="_blank" rel="noopener noreferrer">Link ↗</a>` : ''}
+              ${actionBtn}
+              ${isCreator ? `<button class="bsm bsm--del" data-action="del" data-id="${g.id}" title="Xóa">×</button>` : ''}
+            </div>
+          </div>
+        </article>`;
+    }
+
+    async function toggleReserve(id) {
+      const ref = doc(db,'gifts',id);
+      try {
+        await runTransaction(db, async tx => {
+          const snap = await tx.get(ref);
+          if (!snap.exists()) throw new Error('Món quà không tồn tại.');
+          const d = snap.data();
+          if (!d.reservedBy) {
+            tx.update(ref,{reservedBy:me.id, reservedByName:nameOf(me.role), reservedAt:serverTimestamp()});
+          } else if (d.reservedBy===me.id) {
+            tx.update(ref,{reservedBy:null, reservedByName:null, reservedAt:null});
+          } else {
+            throw new Error('Đã có người khác giữ rồi.');
+          }
+        });
+      } catch(err) { console.error(err); alert(err.message||'Không thao tác được.'); }
+    }
+
+    /* ── Role Modal ── */
+    $('#pickA').onclick = () => { selectedRole='a'; $('#pickA').classList.add('picked'); $('#pickB').classList.remove('picked'); };
+    $('#pickB').onclick = () => { selectedRole='b'; $('#pickB').classList.add('picked'); $('#pickA').classList.remove('picked'); };
+
+    $('#saveRoleBtn').onclick = () => {
+      if (!selectedRole) return showErr($('#roleErr'),'Chọn vai của bạn nhé!');
+      me.role = selectedRole;
+      localStorage.setItem('wishlist_profile', JSON.stringify(me));
+      updateWhoLabel();
+      closeModal('roleModal');
+      // Default: show the OTHER person's list so user can immediately reserve
+      setTab(me.role==='a'?'b':'a');
+    };
+
+    $('#btnWho').onclick = () => {
+      selectedRole = me.role||'';
+      $('#pickA').classList.toggle('picked', selectedRole==='a');
+      $('#pickB').classList.toggle('picked', selectedRole==='b');
+      hideErr($('#roleErr'));
+      openModal('roleModal');
+    };
+
+    /* ── Add Gift Modal ── */
+    document.querySelectorAll('.pstar').forEach(btn => {
+      btn.onclick = () => {
+        priorityVal = parseInt(btn.dataset.v);
+        document.querySelectorAll('.pstar').forEach((b,i)=>b.classList.toggle('on',i<priorityVal));
+      };
+    });
+
+    $('#btnAdmin').onclick = async () => {
+      if (!me.role) return openModal('roleModal');
+      const code = prompt('Nhập mã để thêm quà:');
+      if (code !== ADMIN_CODE) return;
+      ['giftTitle','giftPrice','giftLink','giftImg','giftNote'].forEach(id => {$(('#'+id)).value='';});
+      $('#giftOcc').value = 'random';
+      priorityVal = 1;
+      document.querySelectorAll('.pstar').forEach((b,i)=>b.classList.toggle('on',i===0));
+      hideErr($('#giftErr'));
+      $('#giftModalSub').textContent = `Thêm vào wishlist của ${nameOf(me.role)}`;
+      openModal('giftModal');
+    };
+
+    $('#addGiftBtn').onclick = async () => {
+      hideErr($('#giftErr'));
+      const payload = {
+        title:    ($('#giftTitle').value||'').trim(),
+        price:    ($('#giftPrice').value||'').trim(),
+        occasion: ($('#giftOcc').value||'random'),
+        priority: priorityVal,
+        link:     ($('#giftLink').value||'').trim(),
+        image:    ($('#giftImg').value||'').trim(),
+        note:     ($('#giftNote').value||'').trim(),
+        forList:  me.role,
+      };
+      if (!payload.title||payload.title.length<2) return showErr($('#giftErr'),'Tên món cần ít nhất 2 ký tự.');
+      if (!isUrl(payload.link)||!isUrl(payload.image)) return showErr($('#giftErr'),'Link / Ảnh phải là URL hợp lệ (http/https).');
+      try {
+        await addDoc(giftsCol(),{
+          ...payload, reservedBy:null, reservedByName:null, reservedAt:null,
+          createdAt:serverTimestamp(), createdBy:me.id
+        });
+        closeModal('giftModal');
+      } catch(err) { console.error(err); showErr($('#giftErr'),'Không thêm được. Kiểm tra Firestore rules nhé.'); }
+    };
+
+    /* ── Filters ── */
+    $('#searchInput').oninput = render;
+    $('#filterOcc').onchange  = render;
+    $('#filterStatus').onchange = render;
+
+    /* ── Close buttons ── */
+    document.querySelectorAll('[data-close]').forEach(btn => { btn.onclick = () => closeModal(btn.dataset.close); });
+    $('#btnHelp').onclick = () => openModal('helpModal');
+
+    /* ── AI Panel ── */
+    $('#btnAI').onclick = () => {
+      const wrap = $('#aiWrap');
+      wrap.classList.toggle('hidden');
+      if (!wrap.classList.contains('hidden')) $('#aiInput').focus();
+    };
+    $('#aiClose').onclick = () => $('#aiWrap').classList.add('hidden');
+
+    $('#aiBtn').onclick = async () => {
+      const q = $('#aiInput').value.trim();
+      if (!q) return;
+      const resultEl = $('#aiResult');
+      resultEl.classList.remove('hidden');
+
+      if (!ANTHROPIC_KEY) {
+        resultEl.innerHTML = `<div class="ai-msg">Để dùng tính năng AI, dán API key vào biến <code>ANTHROPIC_KEY</code> ở đầu file JS.<br>Lấy key tại <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a> ✦</div>`;
+        return;
+      }
+
+      const btn = $('#aiBtn');
+      btn.textContent = 'Đang nghĩ…';
+      btn.disabled = true;
+      resultEl.innerHTML = `<div class="ai-msg" style="font-style:italic">Claude đang gợi ý quà cho bạn…</div>`;
+
+      try {
+        const res = await fetch('https://api.anthropic.com/v1/messages', {
+          method: 'POST',
+          headers: { 'Content-Type':'application/json', 'x-api-key':ANTHROPIC_KEY, 'anthropic-version':'2023-06-01' },
+          body: JSON.stringify({
+            model: 'claude-sonnet-4-20250514',
+            max_tokens: 900,
+            messages: [{
+              role: 'user',
+              content: `Gợi ý 5 ý tưởng quà tặng sáng tạo và chu đáo, phù hợp với người yêu dựa trên thông tin: "${q}".
+Trả lời bằng tiếng Việt, chỉ JSON array, không có text hay markdown khác:
+[{"name":"Tên quà","note":"Lý do ngắn tại sao phù hợp","price":"Ước tính giá (đồng VN)"}]`
+            }]
+          })
+        });
+        const data = await res.json();
+        const raw  = data.content?.[0]?.text || '[]';
+        const ideas = JSON.parse(raw.replace(/```json|```/g,'').trim());
+        resultEl.innerHTML = `
+          <div class="ai-result__head">✦ Gợi ý cho bạn</div>
+          <div class="ai-ideas">
+            ${ideas.map((x,i)=>`
+              <div class="ai-idea">
+                <div class="ai-idea__n">${i+1}</div>
+                <div>
+                  <div class="ai-idea__name">${esc(x.name)}</div>
+                  <div class="ai-idea__note">${esc(x.note)}</div>
+                  ${x.price?`<div class="ai-idea__price">${esc(x.price)}</div>`:''}
+                </div>
+              </div>`).join('')}
+          </div>`;
+      } catch(err) {
+        console.error(err);
+        resultEl.innerHTML = `<div class="ai-msg" style="color:var(--rose)">Lỗi khi gợi ý. Kiểm tra API key và kết nối mạng.</div>`;
+      } finally {
+        btn.textContent = 'Gợi ý';
+        btn.disabled = false;
+      }
+    };
+    $('#aiInput').onkeydown = e => { if(e.key==='Enter') $('#aiBtn').click(); };
+
+    /* ══════════════════════════════════════════════
+       LOVE COUNTER — Bộ đếm ngày yêu nhau
+       ══════════════════════════════════════════════ */
+
+    // ← Ngày bắt đầu yêu nhau (YYYY-MM-DD)
+    const LOVE_START = "2025-12-21";
+
+    // ← Các kỷ niệm quan trọng (thêm tùy bạn)
+    // Tính từ 2025-12-21: +100 ngày = 2026-03-31, +6 tháng = 2026-06-21, +1 năm = 2026-12-21
+    const LOVE_MEMORIES = [
+      { date: "2025-12-21", title: "Ngày đầu tiên ❤️",     desc: "Ngày hai đứa chính thức bên nhau", special: true },
+      { date: "2026-03-31", title: "100 ngày yêu nhau 🎉",  desc: "Cột mốc 100 ngày đầu tiên", special: true },
+      { date: "2026-06-21", title: "6 tháng bên nhau 🌸",   desc: "Nửa năm đầu tiên của hai mình", special: true },
+      { date: "2026-12-21", title: "1 năm yêu nhau 🥂",     desc: "Kỷ niệm 1 năm đặc biệt", special: true },
+      { date: "2027-12-21", title: "2 năm yêu nhau 💑",     desc: "Kỷ niệm 2 năm hạnh phúc", special: true },
+    ];
+
+    // Milestones theo tổng số ngày
+    const LOVE_MILESTONES = [
+      { days: 100,  label: "100 ngày",   icon: "🌷" },
+      { days: 200,  label: "200 ngày",   icon: "🌹" },
+      { days: 365,  label: "1 năm",      icon: "🥂" },
+      { days: 500,  label: "500 ngày",   icon: "💌" },
+      { days: 730,  label: "2 năm",      icon: "💑" },
+      { days: 1000, label: "1000 ngày",  icon: "🏆" },
+    ];
+
+    function loveCounterInit() {
+      if (!LOVE_START) return;
+      renderLoveMilestones();
+      renderLoveTimeline();
+      updateLiveCounter();
+      setInterval(updateLiveCounter, 1000);
+    }
+
+    function updateLiveCounter() {
+      const start = new Date(LOVE_START);
+      const now = new Date();
+      const diff = now - start;
+      if (diff < 0) return;
+
+      const totalDays = Math.floor(diff / 86400000);
+      const years     = Math.floor(totalDays / 365);
+      const months    = Math.floor((totalDays % 365) / 30);
+      const days      = totalDays % 30;
+      const hours     = now.getHours();
+
+      $('#lcYears').innerHTML  = `<span>${years}</span>`;
+      $('#lcMonths').innerHTML = `<span>${months}</span>`;
+      $('#lcDays').innerHTML   = `<span>${days}</span>`;
+      $('#lcHours').innerHTML  = `<span>${hours}</span>`;
+      $('#loveDaysHero').textContent = totalDays.toLocaleString('vi-VN');
+
+      // Next anniversary countdown
+      const nextAnniv = nextAnniversary(start);
+      const daysLeft = Math.ceil((nextAnniv.date - now) / 86400000);
+      const years_n = nextAnniv.years;
+      $('#loveNextDays').textContent = `${daysLeft} ngày`;
+      $('#loveNextEvent').textContent = `đến kỷ niệm ${years_n} năm yêu nhau (${fmtDate(nextAnniv.date)})`;
+    }
+
+    function nextAnniversary(start) {
+      const now = new Date();
+      let y = now.getFullYear();
+      let next = new Date(y, start.getMonth(), start.getDate());
+      if (next <= now) {
+        y++;
+        next = new Date(y, start.getMonth(), start.getDate());
+      }
+      return { date: next, years: y - start.getFullYear() };
+    }
+
+    function fmtDate(d) {
+      return d.toLocaleDateString('vi-VN', { day:'2-digit', month:'2-digit', year:'numeric' });
+    }
+
+    function fmtDateShort(str) {
+      const d = new Date(str);
+      return d.toLocaleDateString('vi-VN', { day:'2-digit', month:'2-digit', year:'numeric' });
+    }
+
+    function renderLoveMilestones() {
+      const start = new Date(LOVE_START);
+      const now = new Date();
+      const totalDays = Math.floor((now - start) / 86400000);
+      const el = $('#milestonesGrid');
+      if (!el) return;
+      el.innerHTML = LOVE_MILESTONES.map(m => {
+        const mDate = new Date(start.getTime() + m.days * 86400000);
+        const reached = totalDays >= m.days;
+        const isNext  = !reached && LOVE_MILESTONES.findIndex(x=>x.days===m.days) === LOVE_MILESTONES.findIndex(x=>totalDays<x.days);
+        const cls = reached ? 'milestone--reached' : isNext ? 'milestone--next' : '';
+        const badge = reached
+          ? `<div class="milestone__badge milestone__badge--done">✓ Đã đạt</div>`
+          : isNext
+            ? `<div class="milestone__badge milestone__badge--soon">Sắp tới</div>`
+            : `<div class="milestone__badge milestone__badge--future">Chờ nhé</div>`;
+        return `<div class="milestone ${cls}">
+          ${badge}
+          <div class="milestone__icon">${m.icon}</div>
+          <div class="milestone__days">${m.days.toLocaleString('vi-VN')}</div>
+          <div class="milestone__label">${m.label} yêu nhau</div>
+          <div class="milestone__date">${fmtDate(mDate)}</div>
+        </div>`;
+      }).join('');
+    }
+
+    function renderLoveTimeline() {
+      const el = $('#timelineList');
+      if (!el) return;
+      const now = new Date();
+      // Sort by date desc
+      const sorted = [...LOVE_MEMORIES].sort((a,b) => new Date(b.date) - new Date(a.date));
+      el.innerHTML = sorted.map(m => {
+        const d = new Date(m.date);
+        const past = d <= now;
+        return `<div class="tl-item ${m.special ? 'tl-item--special' : ''}">
+          <div class="tl-item__date">${fmtDateShort(m.date)}${!past ? ' · Sắp tới ✦' : ''}</div>
+          <div class="tl-item__title">${esc(m.title)}</div>
+          ${m.desc ? `<div class="tl-item__desc">${esc(m.desc)}</div>` : ''}
+        </div>`;
+      }).join('');
+    }
+
+    /* ── INIT ── */
+    async function init() {
+      initNames();
+      renderCountdown();
+      loveCounterInit();
+
+      // Load local profile
+      const saved = JSON.parse(localStorage.getItem('wishlist_profile')||'null');
+      if (saved?.id) me = { role: saved.role||'', id: saved.id };
+      else me.id = uid();
+      updateWhoLabel();
+
+      // Firebase
+      try {
+        const app = initializeApp(firebaseConfig);
+        db = getFirestore(app);
+      } catch(err) {
+        console.error(err);
+        setOnline(false,'Firebase config chưa đúng');
+        return;
+      }
+
+      await seedIfEmpty();
+      subscribe();
+
+      // Show role modal if first visit
+      if (!me.role) {
+        openModal('roleModal');
+      } else {
+        // Default to showing other person's wishlist
+        setTab(me.role==='a'?'b':'a');
+      }
+    }
+
+    init();
+  </script>
+</body>
 </html>
